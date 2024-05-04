@@ -21,7 +21,7 @@ if [ -z $IS_GREEN_EXIST ];then
   done;
   sleep 3
   echo ">>> nginx를 다시 실행 합니다."
-#  sudo cp /etc/nginx/nginx.green.conf /etc/nginx/nginx.conf
+  sudo cp /etc/nginx/nginx.green.conf /etc/nginx/nginx.conf
   sudo nginx -s reload
   echo ">>> blue container를 down합니다."
   docker-compose stop blue
@@ -44,7 +44,7 @@ else
   done;
   sleep 3
   echo ">>> nginx를 다시 실행 합니다."
-#  sudo cp /etc/nginx/nginx.blue.conf /etc/nginx/nginx.conf
+  sudo cp /etc/nginx/nginx.blue.conf /etc/nginx/nginx.conf
   sudo nginx -s reload
   echo ">>> green container를 down합니다."
   docker-compose stop green

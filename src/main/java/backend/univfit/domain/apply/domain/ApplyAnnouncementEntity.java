@@ -21,9 +21,17 @@ public class ApplyAnnouncementEntity {
     private String scholarShipFoundation;
     private String foundationLink;
     private Boolean isCoverLetterNeed;
+
+    @Lob
     private String coverLetterQuestion;
+
+    @Lob
     private String applicationConditions;
+
+    @Lob
     private Integer supportAmount;
+
+    @Lob
     private String applicationPeriod;
 
 }

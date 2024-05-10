@@ -3,6 +3,7 @@ package backend.univfit.domain.apply.domain;
 import backend.univfit.domain.apply.domain.enums.MontlyIncome;
 import backend.univfit.domain.member.entity.enums.SchoolType;
 import backend.univfit.domain.member.entity.enums.*;
+import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ConditionEntity {
+public class ConditionEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

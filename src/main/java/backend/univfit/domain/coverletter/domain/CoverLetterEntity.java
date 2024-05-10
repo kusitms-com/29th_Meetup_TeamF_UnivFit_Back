@@ -1,6 +1,7 @@
 package backend.univfit.domain.coverletter.domain;
 
 import backend.univfit.domain.member.entity.Member;
+import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class CoverLetterEntity {
+public class CoverLetterEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

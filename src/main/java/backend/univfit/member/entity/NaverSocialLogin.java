@@ -18,6 +18,6 @@ public class NaverSocialLogin {
     private String naverNumber;
 
     @OneToOne
-    @Column(name = "member_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 }

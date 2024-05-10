@@ -16,4 +16,10 @@ public class Member {
     private Long id;
 
     private String nickName;
+
+    @OneToOne
+    @JoinColumn(name = "memberPrivateInfo_id")
+    private MemberPrivateInfo memberPrivateInfo;
+
+
 }

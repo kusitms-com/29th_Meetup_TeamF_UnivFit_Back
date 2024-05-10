@@ -7,19 +7,19 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 public class LoginResponse {
-    private Boolean isMember;
     private Long memberId;
+    private Boolean isOnboarding;
     private String accessToken;
     private String refreshToken;
 
     public static LoginResponse of(
-            Boolean isMember,
             Long memberId,
+            Boolean isOnboarding,
             String accessToken,
             String refreshToken
     ){
         return LoginResponse.builder()
-                .isMember(isMember)
+                .isOnboarding(isOnboarding)
                 .memberId(memberId)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

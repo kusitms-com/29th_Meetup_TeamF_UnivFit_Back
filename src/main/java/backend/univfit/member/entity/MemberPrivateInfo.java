@@ -9,15 +9,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class KakaoSocialLogin {
+public class MemberPrivateInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "kakaoSocialLogin_id")
+    @Column(name = "memberPrivateInfo_id")
     private Long id;
 
-    private String kakaoNumber;
-
-    @OneToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private String schoolName;
 }

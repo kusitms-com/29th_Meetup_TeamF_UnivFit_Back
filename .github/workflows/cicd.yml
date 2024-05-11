@@ -3,8 +3,9 @@ name: Java CI & CD with Gradle
 on:
   push:
     branches: [ "develop" ]
-  # pull_request:
-  #   branches: [ "develop" ]
+
+  pull_request:
+    branches: [ "develop" ]
 
 permissions:
   contents: read
@@ -31,6 +32,16 @@ jobs:
         echo "$APPLICATION_MAIN" > ./application.yml
       env:
         APPLICATION_MAIN: ${{ secrets.APPLICATION_MAIN }}
+
+    - name: Gradle Caching
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-    
              
     
     # gradle build

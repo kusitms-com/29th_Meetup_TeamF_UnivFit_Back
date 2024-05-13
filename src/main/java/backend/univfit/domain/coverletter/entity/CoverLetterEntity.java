@@ -1,5 +1,6 @@
-package backend.univfit.domain.coverletter.domain;
+package backend.univfit.domain.coverletter.entity;
 
+import backend.univfit.domain.member.entity.Member;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,20 +9,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "cover_letter_question")
+@Table(name = "cover_letter")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class CoverLetterQuestionEntity extends BaseEntity {
+public class CoverLetterEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String question;
-    private String content;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cover_letter_id")
-    private CoverLetterEntity coverLetterEntity;
-
+    @JoinColumn(name = "member_id")
+    private Member member;
 }

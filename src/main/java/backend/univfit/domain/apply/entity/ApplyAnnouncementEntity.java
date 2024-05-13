@@ -1,4 +1,4 @@
-package backend.univfit.domain.apply.domain;
+package backend.univfit.domain.apply.entity;
 
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;

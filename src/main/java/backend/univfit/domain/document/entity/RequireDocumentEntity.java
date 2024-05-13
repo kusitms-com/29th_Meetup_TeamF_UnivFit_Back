@@ -1,6 +1,6 @@
-package backend.univfit.domain.document.domain;
+package backend.univfit.domain.document.entity;
 
-import backend.univfit.domain.apply.domain.ApplyAnnouncementEntity;
+import backend.univfit.domain.apply.entity.ApplyAnnouncementEntity;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

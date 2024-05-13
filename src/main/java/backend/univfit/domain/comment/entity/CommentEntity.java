@@ -1,5 +1,6 @@
-package backend.univfit.domain.apply.domain;
+package backend.univfit.domain.comment.entity;
 
+import backend.univfit.domain.apply.entity.ApplyAnnouncementEntity;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
@@ -9,16 +10,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "like")
+@Table(name = "comment")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class LikeEntity extends BaseEntity {
+public class CommentEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer count;
+    private String commentContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apply_announcement_id")

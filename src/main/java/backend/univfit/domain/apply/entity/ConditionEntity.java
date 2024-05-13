@@ -1,6 +1,6 @@
-package backend.univfit.domain.apply.domain;
+package backend.univfit.domain.apply.entity;
 
-import backend.univfit.domain.apply.domain.enums.MontlyIncome;
+import backend.univfit.domain.apply.entity.enums.MontlyIncome;
 import backend.univfit.domain.member.entity.enums.SchoolType;
 import backend.univfit.domain.member.entity.enums.*;
 import backend.univfit.global.BaseEntity;

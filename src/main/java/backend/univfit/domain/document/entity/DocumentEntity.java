@@ -1,4 +1,4 @@
-package backend.univfit.domain.coverletter.domain;
+package backend.univfit.domain.document.entity;
 
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.global.BaseEntity;
@@ -9,14 +9,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "cover_letter")
+@Table(name = "document")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class CoverLetterEntity extends BaseEntity {
+public class DocumentEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private DocumentType documentType;
+
+    private String issuer;
+    private String issueSite;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

@@ -22,7 +22,7 @@ public class DocumentEntity extends BaseEntity {
     private DocumentType documentType;
 
     private String issuer;
-    private String issueSite;
+    private String memo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

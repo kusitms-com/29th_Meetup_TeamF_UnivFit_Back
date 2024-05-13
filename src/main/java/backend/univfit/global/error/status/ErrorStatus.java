@@ -19,7 +19,13 @@ public enum ErrorStatus implements BaseErrorCode {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_001", "사용자를 찾을 수 없습니다."),
 
     //Body 에러
-    INVALID_BODY(HttpStatus.BAD_REQUEST, "BODY_ERROR", "Body가 올바르지 않습니다.");
+    INVALID_BODY(HttpStatus.BAD_REQUEST, "BODY_ERROR", "Body가 올바르지 않습니다."),
+
+    //JWT 관련 에러
+    JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT_001", "JWT인증시간이 만료되었습니다."),
+    JWT_UNSUPPORTED_TOKEN_TYPE(HttpStatus.UNAUTHORIZED, "JWT_002", "지원하는 JWT타입이 아닙니다."),
+    JWT_INVALIED(HttpStatus.UNAUTHORIZED, "JWT_003", "유효한 JWT가 아닙니다.");
+
 
 
 

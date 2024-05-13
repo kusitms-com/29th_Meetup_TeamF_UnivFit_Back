@@ -24,7 +24,7 @@ public class ApplyEntity extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "apply_announcement_id")
-    private ApplyAnnouncementEntity applyAnnouncementEntity;
+    private AnnouncementEntity announcementEntity;
 
 
 

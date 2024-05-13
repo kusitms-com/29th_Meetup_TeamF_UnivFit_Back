@@ -20,7 +20,7 @@ public class LikeEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apply_announcement_id")
-    private ApplyAnnouncementEntity applyAnnouncementEntity;
+    private AnnouncementEntity announcementEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

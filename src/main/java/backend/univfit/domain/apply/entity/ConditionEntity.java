@@ -40,5 +40,5 @@ public class ConditionEntity extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "apply_announcement_id")
-    private ApplyAnnouncementEntity applyAnnouncementEntity;
+    private AnnouncementEntity announcementEntity;
 }

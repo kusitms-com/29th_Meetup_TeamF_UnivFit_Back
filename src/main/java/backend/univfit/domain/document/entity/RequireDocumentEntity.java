@@ -1,6 +1,7 @@
 package backend.univfit.domain.document.entity;
 
-import backend.univfit.domain.apply.entity.ApplyAnnouncementEntity;
+import backend.univfit.domain.apply.entity.AnnouncementEntity;
+import backend.univfit.domain.document.enums.RequiredOptions;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -20,7 +21,10 @@ public class RequireDocumentEntity extends BaseEntity {
 
     private String documentName;
 
+    @Enumerated(EnumType.STRING)
+    private RequiredOptions requiredOptions;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apply_announcement_document")
-    private ApplyAnnouncementEntity applyAnnouncementEntity;
+    private AnnouncementEntity announcementEntity;
 }

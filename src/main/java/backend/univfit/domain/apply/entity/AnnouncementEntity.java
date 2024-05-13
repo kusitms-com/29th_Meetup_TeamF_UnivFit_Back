@@ -8,11 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "apply_announcement")
+@Table(name = "announcement")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ApplyAnnouncementEntity extends BaseEntity {
+public class AnnouncementEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +22,9 @@ public class ApplyAnnouncementEntity extends BaseEntity {
     private String scholarShipFoundation;
     private String foundationLink;
     private Boolean isCoverLetterNeed;
+
+    @Lob
+    private String detailContents;
 
     @Lob
     private String coverLetterQuestion;

@@ -18,8 +18,6 @@ public class LikeEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer count;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apply_announcement_id")
     private ApplyAnnouncementEntity applyAnnouncementEntity;

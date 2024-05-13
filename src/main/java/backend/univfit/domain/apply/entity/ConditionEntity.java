@@ -1,6 +1,6 @@
 package backend.univfit.domain.apply.entity;
 
-import backend.univfit.domain.apply.entity.enums.MontlyIncome;
+import backend.univfit.domain.apply.entity.enums.MonthlyIncome;
 import backend.univfit.domain.member.entity.enums.SchoolType;
 import backend.univfit.domain.member.entity.enums.*;
 import backend.univfit.global.BaseEntity;
@@ -36,7 +36,7 @@ public class ConditionEntity extends BaseEntity {
     private String totalGrade;
     private IncomeQuality incomeQuality;
     private SupportSection supportSection;
-    private MontlyIncome montlyIncome;
+    private MonthlyIncome monthlyIncome;
 
     @OneToOne
     @JoinColumn(name = "apply_announcement_id")

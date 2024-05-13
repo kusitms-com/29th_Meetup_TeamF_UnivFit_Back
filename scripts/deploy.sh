@@ -19,7 +19,7 @@ if [ -z $IS_GREEN_EXIST ];then
       break;
     fi
   done;
-  sleep 3
+  sleep 2
   echo ">>> nginx를 다시 실행 합니다."
   sudo cp /etc/nginx/nginx.green.conf /etc/nginx/nginx.conf
   sudo nginx -s reload
@@ -35,7 +35,7 @@ else
   docker-compose up -d blue
   while [ 1 = 1 ]; do
     echo ">>> blue health check 중..."
-    sleep 3
+    sleep 2
     REQUEST=$(curl http://127.0.0.1:8080)
     if [ -n "$REQUEST" ]; then
       echo ">>> 🍃 health check success !"

@@ -21,4 +21,6 @@ public class OnboardApi {
                                             @RequestHeader("socialAccessToken") String accessToken) throws ParseException {
         return ApiResponse.onSuccess(onboardService.login(sn, accessToken));
     }
+
+    @PostMapping("")
 }

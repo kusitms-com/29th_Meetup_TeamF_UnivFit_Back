@@ -27,6 +27,27 @@ import java.util.Optional;
 @Slf4j
 @RestControllerAdvice(annotations = {RestController.class})
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
+    /**
+     * JWT Exception
+     */
+    @ExceptionHandler(value = JwtException.class)
+    public ResponseEntity onThrowJwtException(JwtException jwtException, HttpServletRequest httpServletRequest) {
+
+        ErrorReasonDto errorReasonHttpStatus = jwtException.getErrorReasonHttpStatus();
+
+        return handleExceptionInternal(jwtException, errorReasonHttpStatus, null, httpServletRequest);
+    }
+
+    /**
+     * Onboard Exception
+     */
+    @ExceptionHandler(value = OnboardException.class)
+    public ResponseEntity onThrowOnboardException(OnboardException onboardException, HttpServletRequest httpServletRequest) {
+
+        ErrorReasonDto errorReasonHttpStatus = onboardException.getErrorReasonHttpStatus();
+
+        return handleExceptionInternal(onboardException, errorReasonHttpStatus, null, httpServletRequest);
+    }
 
     /**
      * 요청된 타입과 맞지 않는 파라미터가 전달될 때 발생

@@ -37,13 +37,17 @@ public class AccessTokenInterceptor implements HandlerInterceptor {
         }
 
         String socialLoginInfo = JwtUtils.getSocialLoginInfo(userToken, secretKey);
+        log.info("socialLoginInfo : {}", socialLoginInfo);
         request.setAttribute("socialLoginInfo",socialLoginInfo);
 
         Long socialPK = JwtUtils.getSocialPK(userToken, secretKey);
         request.setAttribute("socialPK", socialPK);
+        log.info("socialPK : {}", socialPK);
 
         Long memberId = JwtUtils.getMemberId(userToken, secretKey);
         request.setAttribute("memberId", memberId);
+
+        log.info("memberId : {}", memberId);
         return true;
 
     }

@@ -1,6 +1,7 @@
 package backend.univfit.domain.member.application;
 
 import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
+import backend.univfit.domain.member.dto.response.AccessTokenResponse;
 import backend.univfit.domain.member.entity.KakaoSocialLogin;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.entity.NaverSocialLogin;
@@ -88,18 +89,20 @@ public class OnboardService {
     }
 
 
-    public GeneralResponse makeNickName(MakeNickNameRequest mnr, MemberInfoObject mio) {
+    public AccessTokenResponse makeNickName(MakeNickNameRequest mnr, MemberInfoObject mio) {
         String nickName = mnr.getNickName();
         //중복체크
         if(isDuplicatedNickName(nickName)){
             throw new OnboardException(ONBOARD_DUPLICATED_NICKNAME);
         }
 
-        Member member = memberRepository.findById(mio.getMemberId()).get();
+        Member member = Member.builder().build();
         member.setNickName(nickName);
         memberRepository.save(member);
 
-        return GeneralResponse.of();
+        String serviceAccessToken = JwtUtils.createAccessToken(null, mio.getSocialPK(), member.getId(), jwtSecret);
+
+        return AccessTokenResponse.of(serviceAccessToken);
     }
 
     public boolean isDuplicatedNickName(String nickName) {

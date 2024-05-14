@@ -25,7 +25,13 @@ public class MemberInfoArgumentResolver implements HandlerMethodArgumentResolver
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String socialLoginInfo = webRequest.getAttribute("socialLoginInfo", RequestAttributes.SCOPE_REQUEST).toString();
         Long socialPK = Long.parseLong(webRequest.getAttribute("socialPK", RequestAttributes.SCOPE_REQUEST).toString());
-        Long memberId = Long.parseLong(webRequest.getAttribute("memberId", RequestAttributes.SCOPE_REQUEST).toString());
+        Object memberIdObj = webRequest.getAttribute("memberId", RequestAttributes.SCOPE_REQUEST);
+        Long memberId = null;
+
+        if(memberIdObj != null){
+            memberId = Long.parseLong(memberIdObj.toString());
+        }
+
 
         return MemberInfoObject.of(socialLoginInfo, socialPK, memberId);
     }

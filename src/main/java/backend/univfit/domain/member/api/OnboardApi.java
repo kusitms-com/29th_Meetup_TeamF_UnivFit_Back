@@ -1,6 +1,7 @@
 package backend.univfit.domain.member.api;
 
 import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
+import backend.univfit.domain.member.dto.response.AccessTokenResponse;
 import backend.univfit.global.ApiResponse;
 import backend.univfit.domain.member.application.OnboardService;
 import backend.univfit.domain.member.dto.response.LoginResponse;
@@ -24,8 +25,8 @@ public class OnboardApi {
     }
 
     @PostMapping("/onboards/nick-name")
-    public ApiResponse<GeneralResponse> makeNickName(@RequestBody MakeNickNameRequest mnr,
-                                                     @MemberInfo MemberInfoObject mio){
+    public ApiResponse<AccessTokenResponse> makeNickName(@RequestBody MakeNickNameRequest mnr,
+                                                         @MemberInfo MemberInfoObject mio){
         return ApiResponse.onSuccess(onboardService.makeNickName(mnr, mio));
     }
 }

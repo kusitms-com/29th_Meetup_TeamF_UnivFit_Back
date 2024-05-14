@@ -1,4 +1,4 @@
-package backend.univfit.domain.apply.application.api.dto.response;
+package backend.univfit.domain.apply.api.dto.response;
 
 public record AnnouncementDetailResponse(
         String scholarshipName,

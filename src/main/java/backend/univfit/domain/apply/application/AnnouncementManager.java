@@ -1,4 +1,4 @@
-package backend.univfit.domain.apply.application.service;
+package backend.univfit.domain.apply.application;
 
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.entity.ConditionEntity;

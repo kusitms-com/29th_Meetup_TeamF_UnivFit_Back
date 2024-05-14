@@ -1,8 +1,8 @@
-package backend.univfit.domain.apply.application.api;
+package backend.univfit.domain.apply.api;
 
-import backend.univfit.domain.apply.application.api.dto.response.AnnouncementListResponse;
-import backend.univfit.domain.apply.application.service.AnnouncementService;
-import backend.univfit.domain.apply.application.api.dto.response.AnnouncementResponse;
+import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
+import backend.univfit.domain.apply.application.AnnouncementService;
+import backend.univfit.domain.apply.api.dto.response.AnnouncementResponse;
 import backend.univfit.global.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

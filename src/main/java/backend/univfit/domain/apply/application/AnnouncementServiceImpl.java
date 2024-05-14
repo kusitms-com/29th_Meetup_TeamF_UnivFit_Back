@@ -1,18 +1,13 @@
-package backend.univfit.domain.apply.application.service;
+package backend.univfit.domain.apply.application;
 
-import backend.univfit.domain.apply.application.api.dto.response.AnnouncementDetailResponse;
-import backend.univfit.domain.apply.application.api.dto.response.AnnouncementListResponse;
-import backend.univfit.domain.apply.application.api.dto.response.AnnouncementResponse;
+import backend.univfit.domain.apply.api.dto.response.AnnouncementDetailResponse;
+import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
+import backend.univfit.domain.apply.api.dto.response.AnnouncementResponse;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
-import backend.univfit.domain.apply.entity.ConditionEntity;
 import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
-import backend.univfit.domain.apply.entity.enums.ConditionMatch;
 import backend.univfit.domain.apply.exception.AnnouncementException;
-import backend.univfit.domain.apply.exception.ConditionException;
 import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
 import backend.univfit.domain.apply.repository.ConditionJpaRepository;
-import backend.univfit.domain.member.repository.MemberJpaRepository;
-import backend.univfit.domain.member.repository.MemberPrivateInfoJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import static backend.univfit.global.error.status.ErrorStatus.ANNOUNCEMENT_NOT_FOUND;
-import static backend.univfit.global.error.status.ErrorStatus.CONDITION_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

@@ -10,25 +10,38 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "member_private_info")
 public class MemberPrivateInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memberPrivateInfo_id")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private SchoolType schoolType;
+
     private String schoolName;
     private String deptType;
     private String deptName;
-    private Boolean inPresent;
+    private Boolean isPresent;
     private Integer semester;
     private String residence;
+
+    @Enumerated(EnumType.STRING)
     private ResidenceType residenceType;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+
     private Integer age;
-    private UnderPriviledGedInfo underPriviledGedInfo;
-    private Float grade;
-    private FullGrade fullGrade;
-    private IncomeQuality incomeQuality;
+    private String underPrivilegedInfo;
+    private Float totalGradeOfFive;
+    private Float lastGradeOfFive;
+    private Float totalGradeOfThree;
+    private Float lastGradeOfThree;
+    private Integer incomeQuality;
     private Integer monthlyIncome;
+
+    @Enumerated(EnumType.STRING)
     private SupportSection supportSection;
 }

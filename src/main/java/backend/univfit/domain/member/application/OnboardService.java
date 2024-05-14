@@ -1,14 +1,18 @@
 package backend.univfit.domain.member.application;
 
+import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
+import backend.univfit.domain.member.dto.response.AccessTokenResponse;
 import backend.univfit.domain.member.entity.KakaoSocialLogin;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.entity.NaverSocialLogin;
 import backend.univfit.domain.member.repository.KakaoSocialLoginRepository;
+import backend.univfit.domain.member.repository.MemberRepository;
 import backend.univfit.domain.member.repository.NaverSocialLoginRepository;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 import backend.univfit.global.utils.JwtUtils;
 import backend.univfit.global.utils.KakaoApi;
 import backend.univfit.global.utils.NaverApi;
-import backend.univfit.domain.member.dto.login.response.LoginResponse;
+import backend.univfit.domain.member.dto.response.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
@@ -26,6 +30,7 @@ public class OnboardService {
 
     private final KakaoSocialLoginRepository kakaoSocialLoginRepository;
     private final NaverSocialLoginRepository naverSocialLoginRepository;
+    private final MemberRepository memberRepository;
 
 
     public LoginResponse login(String sn, String accessToken) throws ParseException {
@@ -77,6 +82,19 @@ public class OnboardService {
 
         return LoginResponse.of(memberId,isOnboarding,ServiceAccessToken, refreshToken);
 
+    }
+
+
+    public AccessTokenResponse makeNickName(MakeNickNameRequest mnr, MemberInfoObject mio) {
+        String nickName = mnr.getNickName();
+        //중복체크
+        if(isDuplicatedNickName(nickName)){
+            throw
+        }
+    }
+
+    public boolean isDuplicatedNickName(String nickName) {
+        return memberRepository.findByNickName(nickName) != null;
     }
 
 

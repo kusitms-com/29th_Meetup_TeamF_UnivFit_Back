@@ -1,4 +1,4 @@
-package backend.univfit.domain.member.dto.login.response;
+package backend.univfit.domain.member.dto.response;
 
 import lombok.*;
 

@@ -39,6 +39,17 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     }
 
     /**
+     * Onboard Exception
+     */
+    @ExceptionHandler(value = OnboardException.class)
+    public ResponseEntity onThrowOnboardException(OnboardException onboardException, HttpServletRequest httpServletRequest) {
+
+        ErrorReasonDto errorReasonHttpStatus = onboardException.getErrorReasonHttpStatus();
+
+        return handleExceptionInternal(onboardException, errorReasonHttpStatus, null, httpServletRequest);
+    }
+
+    /**
      * 요청된 타입과 맞지 않는 파라미터가 전달될 때 발생
      * <p>
      * 작동 방식: 예외에서 속성 이름을 추출하고, "올바른 값이 아닙니다."라는 메시지와 함께

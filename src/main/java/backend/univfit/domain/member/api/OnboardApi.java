@@ -1,12 +1,12 @@
 package backend.univfit.domain.member.api;
 
 import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
-import backend.univfit.domain.member.dto.response.AccessTokenResponse;
 import backend.univfit.global.ApiResponse;
 import backend.univfit.domain.member.application.OnboardService;
 import backend.univfit.domain.member.dto.response.LoginResponse;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
 import backend.univfit.global.argumentResolver.customAnnotation.MemberInfo;
+import backend.univfit.global.dto.response.GeneralResponse;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +24,8 @@ public class OnboardApi {
     }
 
     @PostMapping("/onboards/nick-name")
-    public ApiResponse<AccessTokenResponse> makeNickName(@RequestBody MakeNickNameRequest mnr,
-                                                         @MemberInfo MemberInfoObject mio){
+    public ApiResponse<GeneralResponse> makeNickName(@RequestBody MakeNickNameRequest mnr,
+                                                     @MemberInfo MemberInfoObject mio){
         return ApiResponse.onSuccess(onboardService.makeNickName(mnr, mio));
     }
 }

@@ -1,7 +1,6 @@
 package backend.univfit.domain.member.application;
 
 import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
-import backend.univfit.domain.member.dto.response.AccessTokenResponse;
 import backend.univfit.domain.member.entity.KakaoSocialLogin;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.entity.NaverSocialLogin;
@@ -9,6 +8,8 @@ import backend.univfit.domain.member.repository.KakaoSocialLoginRepository;
 import backend.univfit.domain.member.repository.MemberRepository;
 import backend.univfit.domain.member.repository.NaverSocialLoginRepository;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
+import backend.univfit.global.dto.response.GeneralResponse;
+import backend.univfit.global.error.exception.OnboardException;
 import backend.univfit.global.utils.JwtUtils;
 import backend.univfit.global.utils.KakaoApi;
 import backend.univfit.global.utils.NaverApi;
@@ -18,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import static backend.univfit.global.error.status.ErrorStatus.ONBOARD_DUPLICATED_NICKNAME;
 
 @Service
 @Slf4j
@@ -85,12 +88,18 @@ public class OnboardService {
     }
 
 
-    public AccessTokenResponse makeNickName(MakeNickNameRequest mnr, MemberInfoObject mio) {
+    public GeneralResponse makeNickName(MakeNickNameRequest mnr, MemberInfoObject mio) {
         String nickName = mnr.getNickName();
         //중복체크
         if(isDuplicatedNickName(nickName)){
-            throw
+            throw new OnboardException(ONBOARD_DUPLICATED_NICKNAME);
         }
+
+        Member member = memberRepository.findById(mio.getMemberId()).get();
+        member.setNickName(nickName);
+        memberRepository.save(member);
+
+        return GeneralResponse.of();
     }
 
     public boolean isDuplicatedNickName(String nickName) {

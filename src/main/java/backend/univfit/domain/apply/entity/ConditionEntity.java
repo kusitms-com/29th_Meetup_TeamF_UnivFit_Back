@@ -15,28 +15,41 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ConditionEntity extends BaseEntity {
+public class ConditionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String schoolLocation;
+
+    @Enumerated(EnumType.STRING)
     private SchoolType schoolType;
+
     private String schoolName;
     private String deptType;
     private String deptName;
     private Boolean isPresent;
     private Integer semester;
     private String residence;
+
+    @Enumerated(EnumType.STRING)
     private ResidenceType residenceType;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+
     private Integer age;
-    private UnderPriviledGedInfo underPriviledGedInfo;
-    private String lastGrade;
-    private String totalGrade;
-    private IncomeQuality incomeQuality;
+    private String underPrivilegedInfo;
+    private Float totalGradeOfFive;
+    private Float lastGradeOfFive;
+    private Float totalGradeOfThree;
+    private Float lastGradeOfThree;
+
+    private Integer incomeQuality;
+    private Integer monthlyIncome;
+
+    @Enumerated(EnumType.STRING)
     private SupportSection supportSection;
-    private MonthlyIncome monthlyIncome;
 
     @OneToOne
     @JoinColumn(name = "apply_announcement_id")

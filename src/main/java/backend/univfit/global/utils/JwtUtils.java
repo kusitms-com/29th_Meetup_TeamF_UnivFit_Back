@@ -88,4 +88,16 @@ public class JwtUtils {
             throw new JwtException(JWT_INVALIED);
         }
     }
+
+    public static String getSocialLoginInfo(String token, String secretKey){
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("socialLoginInfo", String.class);
+    }
+
+    public static Long getSocialPK(String token, String secretKey){
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("socialPK", Long.class);
+    }
+
+    public static Long getMemberId(String token, String secretKey){
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("memberId", Long.class);
+    }
 }

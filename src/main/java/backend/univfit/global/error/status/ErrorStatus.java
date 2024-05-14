@@ -24,8 +24,10 @@ public enum ErrorStatus implements BaseErrorCode {
     //JWT 관련 에러
     JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT_001", "JWT인증시간이 만료되었습니다."),
     JWT_UNSUPPORTED_TOKEN_TYPE(HttpStatus.UNAUTHORIZED, "JWT_002", "지원하는 JWT타입이 아닙니다."),
-    JWT_INVALIED(HttpStatus.UNAUTHORIZED, "JWT_003", "유효한 JWT가 아닙니다.");
+    JWT_INVALIED(HttpStatus.UNAUTHORIZED, "JWT_003", "유효한 JWT가 아닙니다."),
 
+    //온보딩 에러
+    ONBOARD_DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "ONBOARD_001", "중복된 닉네임 입니다.");
 
 
 

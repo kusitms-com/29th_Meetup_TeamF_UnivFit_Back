@@ -1,19 +1,27 @@
 package backend.univfit.domain.member.application;
 
+import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
+import backend.univfit.domain.member.dto.response.AccessTokenResponse;
 import backend.univfit.domain.member.entity.KakaoSocialLogin;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.entity.NaverSocialLogin;
 import backend.univfit.domain.member.repository.KakaoSocialLoginRepository;
+import backend.univfit.domain.member.repository.MemberRepository;
 import backend.univfit.domain.member.repository.NaverSocialLoginRepository;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
+import backend.univfit.global.dto.response.GeneralResponse;
+import backend.univfit.global.error.exception.OnboardException;
 import backend.univfit.global.utils.JwtUtils;
 import backend.univfit.global.utils.KakaoApi;
 import backend.univfit.global.utils.NaverApi;
-import backend.univfit.domain.member.dto.login.response.LoginResponse;
+import backend.univfit.domain.member.dto.response.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import static backend.univfit.global.error.status.ErrorStatus.ONBOARD_DUPLICATED_NICKNAME;
 
 @Service
 @Slf4j
@@ -26,6 +34,7 @@ public class OnboardService {
 
     private final KakaoSocialLoginRepository kakaoSocialLoginRepository;
     private final NaverSocialLoginRepository naverSocialLoginRepository;
+    private final MemberRepository memberRepository;
 
 
     public LoginResponse login(String sn, String accessToken) throws ParseException {
@@ -77,6 +86,27 @@ public class OnboardService {
 
         return LoginResponse.of(memberId,isOnboarding,ServiceAccessToken, refreshToken);
 
+    }
+
+
+    public AccessTokenResponse makeNickName(MakeNickNameRequest mnr, MemberInfoObject mio) {
+        String nickName = mnr.getNickName();
+        //중복체크
+        if(isDuplicatedNickName(nickName)){
+            throw new OnboardException(ONBOARD_DUPLICATED_NICKNAME);
+        }
+
+        Member member = Member.builder().build();
+        member.setNickName(nickName);
+        memberRepository.save(member);
+
+        String serviceAccessToken = JwtUtils.createAccessToken(null, mio.getSocialPK(), member.getId(), jwtSecret);
+
+        return AccessTokenResponse.of(serviceAccessToken);
+    }
+
+    public boolean isDuplicatedNickName(String nickName) {
+        return memberRepository.findByNickName(nickName) != null;
     }
 
 

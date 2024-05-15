@@ -8,11 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "cover_letter_question")
+@Table(name = "cover_letter_question_table ")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class CoverLetterQuestionEntity extends BaseEntity {
+public class CoverLetterQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

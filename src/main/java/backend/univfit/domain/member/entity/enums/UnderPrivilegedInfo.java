@@ -1,4 +1,5 @@
 package backend.univfit.domain.member.entity.enums;
 
-public enum UnderPriviledGedInfo {
+public enum UnderPrivilegedInfo {
+    D,M,I,B,L,O,E
 }

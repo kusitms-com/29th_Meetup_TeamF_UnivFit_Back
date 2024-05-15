@@ -1,7 +1,6 @@
-package backend.univfit.domain.document.entity;
+package backend.univfit.domain.apply.entity;
 
-import backend.univfit.domain.apply.entity.ApplyAnnouncementEntity;
-import backend.univfit.global.BaseEntity;
+import backend.univfit.domain.document.enums.RequiredOptions;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,14 +12,17 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class RequireDocumentEntity extends BaseEntity {
+public class RequiredDocumentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String documentName;
 
+    @Enumerated(EnumType.STRING)
+    private RequiredOptions requiredOptions;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apply_announcement_document")
-    private ApplyAnnouncementEntity applyAnnouncementEntity;
+    private AnnouncementEntity announcementEntity;
 }

@@ -2,6 +2,7 @@ package backend.univfit.domain.apply.api.dto.response;
 
 
 public record AnnouncementResponse(
+        Long scholarshipId,
         String scholarshipName,
         String scholarshipFoundation,
         String scholarshipStatus,
@@ -9,10 +10,11 @@ public record AnnouncementResponse(
         String remainingDays,
         String applyPossible
 ) {
-    public static AnnouncementResponse of(String scholarshipName, String scholarshipFoundation, String scholarshipStatus,
+    public static AnnouncementResponse of(Long scholarshipId, String scholarshipName, String scholarshipFoundation, String scholarshipStatus,
                                           String applicationPeriod, String remainingDays, String applyPossible) {
 
-        return new AnnouncementResponse(scholarshipName,
+        return new AnnouncementResponse(scholarshipId,
+                scholarshipName,
                 scholarshipFoundation,
                 scholarshipStatus,
                 applicationPeriod,

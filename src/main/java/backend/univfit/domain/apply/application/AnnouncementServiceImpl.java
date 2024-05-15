@@ -66,7 +66,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                     String remainingDaysToString = "D-" + remainingDay;
                     String applyPossible = announcementManager.checkEligibility(ar, 1L);
 
-                    return AnnouncementResponse.of(
+                    return AnnouncementResponse.of(ar.getId(),
                             ar.getScholarShipName(), ar.getScholarShipFoundation(), announcementStatus,
                             ar.getApplicationPeriod(), remainingDaysToString, applyPossible
                     );
@@ -103,7 +103,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         String supportAmount = ae.getSupportAmount() + "만원";
         List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split(",")).toList();
 
-        return AnnouncementDetailResponse.of(ae.getScholarShipName(), ae.getScholarShipFoundation(),
+        return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
                 remainingDaysToString, applyPossible, supportAmount, ae.getApplicationPeriod(), ae.getHashTag(), applyCondition, ae.getDetailContents());
     }
 

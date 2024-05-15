@@ -7,6 +7,7 @@ import backend.univfit.domain.apply.exception.AnnouncementException;
 import backend.univfit.domain.apply.exception.RequiredDocumentException;
 import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
 import backend.univfit.domain.apply.repository.RequiredDocumentJpaRepository;
+import backend.univfit.domain.document.repository.DocumentJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import static backend.univfit.global.error.status.ErrorStatus.REQUIRED_DOCUMENT_
 public class RequiredDocumentServiceImpl implements RequiredDocumentService {
     private final RequiredDocumentJpaRepository requiredDocumentJpaRepository;
     private final AnnouncementJpaRepository announcementJpaRepository;
+    private final DocumentJpaRepository documentJpaRepository;
 
     @Override
     public List<RequiredDocumentResponse> getRequiredDocumentList(Long announcementId) {
@@ -27,8 +29,10 @@ public class RequiredDocumentServiceImpl implements RequiredDocumentService {
                 .orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
 
         return requiredDocumentJpaRepository.findByAnnouncementEntity(ae).stream()
-                .map(r -> RequiredDocumentResponse.of(r.getId(),r.getDocumentName(), String.valueOf(r.getRequiredOptions())))
-                .toList();
+                .map(r -> {
+                    Boolean isHave = documentJpaRepository.findByDocumentName(r.getDocumentName()).isPresent();
+                    return RequiredDocumentResponse.of(r.getId(), r.getDocumentName(), String.valueOf(r.getRequiredOptions()), isHave);
+                }).toList();
     }
 
     @Override
@@ -38,8 +42,12 @@ public class RequiredDocumentServiceImpl implements RequiredDocumentService {
 
         return requiredDocumentJpaRepository.findByAnnouncementEntity(ae)
                 .stream()
-                .filter(rd -> rd.getId() == requiredDocumentId)
-                .map(rd -> RequiredDocumentResponse.of(rd.getId(), rd.getDocumentName(), String.valueOf(rd.getRequiredOptions())))
-                .toList().get(0);
+                .filter(rd -> rd.getId().equals(requiredDocumentId))
+                .map(r -> {
+                    Boolean isHave = documentJpaRepository.findByDocumentName(r.getDocumentName()).isPresent();
+                    return RequiredDocumentResponse.of(r.getId(), r.getDocumentName(), String.valueOf(r.getRequiredOptions()), isHave);
+                }).findFirst()
+                .orElseThrow(() -> new RequiredDocumentException(REQUIRED_DOCUMENT_NOT_FOUND));
     }
+
 }

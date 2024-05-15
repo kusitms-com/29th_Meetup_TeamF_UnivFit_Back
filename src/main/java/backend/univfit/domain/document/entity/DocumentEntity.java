@@ -18,8 +18,7 @@ public class DocumentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private DocumentType documentType;
+    private String documentName;
 
     private String issuer;
     private String memo;

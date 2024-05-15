@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(accessTokenInterceptor)
                 .order(1)
-                .addPathPatterns("/onboards/nick-name");
+                .addPathPatterns("/onboards/**");
     }
 
     @Override

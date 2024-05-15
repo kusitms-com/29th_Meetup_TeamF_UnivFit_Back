@@ -28,4 +28,8 @@ public class CommentEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public static CommentEntity of(Long id, String commentContent, AnnouncementEntity announcementEntity, Member member) {
+        return new CommentEntity(id, commentContent, announcementEntity, member);
+    }
 }

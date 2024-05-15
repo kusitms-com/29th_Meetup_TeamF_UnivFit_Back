@@ -1,8 +1,6 @@
-package backend.univfit.domain.document.entity;
+package backend.univfit.domain.apply.entity;
 
-import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.document.enums.RequiredOptions;
-import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class RequireDocumentEntity {
+public class RequiredDocumentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

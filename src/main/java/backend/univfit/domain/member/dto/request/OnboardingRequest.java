@@ -1,22 +1,19 @@
-package backend.univfit.domain.member.entity;
+package backend.univfit.domain.member.dto.request;
 
-import backend.univfit.domain.member.entity.enums.*;
-import jakarta.persistence.*;
-import lombok.*;
+import backend.univfit.domain.member.entity.enums.Gender;
+import backend.univfit.domain.member.entity.enums.SchoolType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "member_private_info")
-public class MemberPrivateInfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "memberPrivateInfo_id")
-    private Long id;
-
+@Getter
+@Setter
+public class OnboardingRequest {
     @Enumerated(EnumType.STRING)
     private SchoolType schoolType;
     private String schoolName;
@@ -31,12 +28,11 @@ public class MemberPrivateInfo {
     private Gender gender;
     private Integer birthYear;
     private String underPrivilegedInfo;
-    private Float totalGradeOfFive;
-    private Float lastGradeOfFive;
-    private Float totalGradeOfThree;
-    private Float lastGradeOfThree;
+    private Float totalFullGrade;
+    private Float totalGrade;
+    private Float lastFullGrade;
+    private Float lastGrade;
     private Integer incomeQuality;
     private Integer monthlyIncome;
     private Integer supportSection;
-
 }

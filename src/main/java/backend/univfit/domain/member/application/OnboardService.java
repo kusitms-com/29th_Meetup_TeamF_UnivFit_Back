@@ -1,13 +1,16 @@
 package backend.univfit.domain.member.application;
 
 import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
+import backend.univfit.domain.member.dto.request.OnboardingRequest;
 import backend.univfit.domain.member.dto.response.AccessTokenResponse;
 import backend.univfit.domain.member.entity.KakaoSocialLogin;
 import backend.univfit.domain.member.entity.Member;
+import backend.univfit.domain.member.entity.MemberPrivateInfo;
 import backend.univfit.domain.member.entity.NaverSocialLogin;
-import backend.univfit.domain.member.repository.KakaoSocialLoginRepository;
-import backend.univfit.domain.member.repository.MemberRepository;
-import backend.univfit.domain.member.repository.NaverSocialLoginRepository;
+import backend.univfit.domain.member.repository.KakaoSocialLoginJpaRepository;
+import backend.univfit.domain.member.repository.MemberPrivateInfoJpaRepository;
+import backend.univfit.domain.member.repository.MemberJpaRepository;
+import backend.univfit.domain.member.repository.NaverSocialLoginJpaRepository;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
 import backend.univfit.global.dto.response.GeneralResponse;
 import backend.univfit.global.error.exception.OnboardException;
@@ -32,9 +35,10 @@ public class OnboardService {
     private final String KAKAO = "kakao";
     private final String NAVER = "naver";
 
-    private final KakaoSocialLoginRepository kakaoSocialLoginRepository;
-    private final NaverSocialLoginRepository naverSocialLoginRepository;
-    private final MemberRepository memberRepository;
+    private final KakaoSocialLoginJpaRepository kakaoSocialLoginJpaRepository;
+    private final NaverSocialLoginJpaRepository naverSocialLoginJpaRepository;
+    private final MemberJpaRepository memberJpaRepository;
+    private final MemberPrivateInfoJpaRepository memberPrivateInfoJpaRepository;
 
 
     public LoginResponse login(String sn, String accessToken) throws ParseException {
@@ -48,11 +52,11 @@ public class OnboardService {
         // 카카오 로그인 했을 경우
         if(sn.equals(KAKAO)){
             socialId = KakaoApi.getUserInfo(accessToken);
-            KakaoSocialLogin kakaoSocialLogin = kakaoSocialLoginRepository.findByKakaoNumber(socialId);
+            KakaoSocialLogin kakaoSocialLogin = kakaoSocialLoginJpaRepository.findByKakaoNumber(socialId);
             if(kakaoSocialLogin == null){
                 kakaoSocialLogin = new KakaoSocialLogin();
                 kakaoSocialLogin.setKakaoNumber(socialId);
-                kakaoSocialLoginRepository.save(kakaoSocialLogin);
+                kakaoSocialLoginJpaRepository.save(kakaoSocialLogin);
                 socialLoginId = kakaoSocialLogin.getId();
                 socialLoginPlatForm = KAKAO;
             }
@@ -62,11 +66,11 @@ public class OnboardService {
         //네이버 로그인 했을 경우
         if(sn.equals(NAVER)){
             socialId = NaverApi.getResponse(accessToken);
-            NaverSocialLogin naverSocialLogin = naverSocialLoginRepository.findByNaverNumber(socialId);
+            NaverSocialLogin naverSocialLogin = naverSocialLoginJpaRepository.findByNaverNumber(socialId);
             if(naverSocialLogin == null){
                 naverSocialLogin = new NaverSocialLogin();
                 naverSocialLogin.setNaverNumber(socialId);
-                naverSocialLoginRepository.save(naverSocialLogin);
+                naverSocialLoginJpaRepository.save(naverSocialLogin);
                 socialLoginId = naverSocialLogin.getId();
                 socialLoginPlatForm = NAVER;
             }
@@ -98,15 +102,66 @@ public class OnboardService {
 
         Member member = Member.builder().build();
         member.setNickName(nickName);
-        memberRepository.save(member);
+        memberJpaRepository.save(member);
 
-        String serviceAccessToken = JwtUtils.createAccessToken(null, mio.getSocialPK(), member.getId(), jwtSecret);
+        log.info("socialLoginInfo = {}", mio.getSocialLoginInfo());
+        String serviceAccessToken = JwtUtils.createAccessToken(mio.getSocialLoginInfo(), mio.getSocialPK(), member.getId(), jwtSecret);
 
         return AccessTokenResponse.of(serviceAccessToken);
     }
 
     public boolean isDuplicatedNickName(String nickName) {
-        return memberRepository.findByNickName(nickName) != null;
+        return memberJpaRepository.findByNickName(nickName) != null;
+    }
+
+
+    public GeneralResponse onboarding(OnboardingRequest obr, MemberInfoObject mio) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+        MemberPrivateInfo memberPrivateInfo = member.getMemberPrivateInfo();
+        if(memberPrivateInfo == null){
+            memberPrivateInfo = MemberPrivateInfo.builder().build();
+        }
+
+        saveMemberPrivateInfo(memberPrivateInfo, member, obr);
+
+        return GeneralResponse.of();
+    }
+
+    private void saveMemberPrivateInfo(MemberPrivateInfo memberPrivateInfo, Member member, OnboardingRequest obr) {
+        memberPrivateInfo.setGender(obr.getGender());
+        memberPrivateInfo.setBirthYear(obr.getBirthYear());
+        memberPrivateInfo.setResidence(obr.getResidence());
+        memberPrivateInfo.setResidenceType(obr.getResidenceType());
+        memberPrivateInfo.setSchoolType(obr.getSchoolType());
+        memberPrivateInfo.setSchoolLocation(obr.getSchoolLocation());
+        memberPrivateInfo.setSchoolName(obr.getSchoolName());
+        memberPrivateInfo.setDeptType(obr.getDeptType());
+        memberPrivateInfo.setDeptName(obr.getDeptName());
+        memberPrivateInfo.setIsPresent(obr.getIsPresent());
+        memberPrivateInfo.setSemester(obr.getSemester());
+        if(obr.getTotalFullGrade() == 4.5){
+            memberPrivateInfo.setTotalGradeOfFive(obr.getTotalGrade());
+        }
+        else{
+            memberPrivateInfo.setTotalGradeOfThree(obr.getTotalGrade());
+        }
+
+        if(obr.getLastGrade() == 4.5){
+            memberPrivateInfo.setLastGradeOfFive(obr.getLastGrade());
+        }
+        else{
+            memberPrivateInfo.setLastGradeOfThree(obr.getLastGrade());
+        }
+        memberPrivateInfo.setIncomeQuality(obr.getIncomeQuality());
+        memberPrivateInfo.setSupportSection(obr.getSupportSection());
+        memberPrivateInfo.setMonthlyIncome(obr.getMonthlyIncome());
+        memberPrivateInfo.setUnderPrivilegedInfo(obr.getUnderPrivilegedInfo());
+
+        memberPrivateInfoJpaRepository.save(memberPrivateInfo);
+
+        member.setMemberPrivateInfo(memberPrivateInfo);
+        memberJpaRepository.save(member);
+
     }
 
 

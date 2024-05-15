@@ -75,7 +75,7 @@ public class AnnouncementManager {
                 (condition.getResidence() == null || Objects.equals(condition.getResidence(), memberInfo.getResidence())) &&
                 (condition.getResidenceType() == null || Objects.equals(condition.getResidenceType(), memberInfo.getResidenceType())) &&
                 (condition.getGender() == null || Objects.equals(condition.getGender(), memberInfo.getGender())) &&
-                (condition.getAge() == null || Objects.equals(condition.getAge(), memberInfo.getAge())) &&
+                (condition.getAge() == null || Objects.equals(condition.getAge(), memberInfo.getBirthYear())) &&
                 underPrevilegedMatch;
     }
 

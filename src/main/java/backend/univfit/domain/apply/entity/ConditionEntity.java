@@ -1,6 +1,7 @@
 package backend.univfit.domain.apply.entity;
 
 import backend.univfit.domain.apply.entity.enums.MonthlyIncome;
+import backend.univfit.domain.member.entity.enums.ResidenceType;
 import backend.univfit.domain.member.entity.enums.SchoolType;
 import backend.univfit.domain.member.entity.enums.*;
 import backend.univfit.global.BaseEntity;

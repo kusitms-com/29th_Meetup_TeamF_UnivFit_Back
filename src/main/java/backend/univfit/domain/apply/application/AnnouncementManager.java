@@ -46,14 +46,11 @@ public class AnnouncementManager {
     }
 
     private String compareConditions(ConditionEntity condition, MemberPrivateInfo memberInfo) {
-        try {
-            if (!compareBasicInfo(condition, memberInfo) || !compareGrades(condition, memberInfo) || !compareIncome(condition, memberInfo)) {
-                return "지원불가";
-            }
-            return "지원대상";
-        } catch (NullPointerException e) {
+        if (condition.getExceptionValue() != null) {
             return "판단불가";
-        }
+        } else if (!compareBasicInfo(condition, memberInfo) || !compareGrades(condition, memberInfo) || !compareIncome(condition, memberInfo)) {
+            return "지원불가";
+        } else return "지원대상";
     }
 
     private boolean compareBasicInfo(ConditionEntity condition, MemberPrivateInfo memberInfo) {

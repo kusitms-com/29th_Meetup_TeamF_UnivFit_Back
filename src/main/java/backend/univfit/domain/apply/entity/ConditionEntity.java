@@ -51,6 +51,8 @@ public class ConditionEntity {
     @Enumerated(EnumType.STRING)
     private SupportSection supportSection;
 
+    private String exceptionValue;
+
     @OneToOne
     @JoinColumn(name = "apply_announcement_id")
     private AnnouncementEntity announcementEntity;

@@ -4,22 +4,28 @@ import backend.univfit.domain.apply.api.dto.response.AnnouncementDetailResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementResponse;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
+import backend.univfit.domain.apply.entity.ConditionEntity;
 import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
 import backend.univfit.domain.apply.exception.AnnouncementException;
+import backend.univfit.domain.apply.exception.ConditionException;
 import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
 import backend.univfit.domain.apply.repository.ConditionJpaRepository;
+import backend.univfit.domain.member.entity.Member;
+import backend.univfit.domain.member.entity.MemberPrivateInfo;
+import backend.univfit.domain.member.exception.MemberException;
+import backend.univfit.domain.member.exception.MemberPrivateInfoException;
+import backend.univfit.domain.member.repository.MemberJpaRepository;
+import backend.univfit.domain.member.repository.MemberPrivateInfoJpaRepository;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static backend.univfit.global.error.status.ErrorStatus.ANNOUNCEMENT_NOT_FOUND;
+import static backend.univfit.global.error.status.ErrorStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +34,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementJpaRepository announcementJpaRepository;
     private final AnnouncementManager announcementManager;
     private final ConditionJpaRepository conditionJpaRepository;
+    private final MemberPrivateInfoJpaRepository memberPrivateInfoJpaRepository;
+    private final MemberJpaRepository memberJpaRepository;
 
     /**
      * 전체장학금 조회
@@ -64,23 +72,33 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     /**
      * 세부장학금 조회
+     *
      * @param announcementId
      * @return
      */
     @Override
-    public AnnouncementResponse getAnnouncement(Long announcementId) {
-        AnnouncementEntity ar = announcementJpaRepository.findById(announcementId)
+    public AnnouncementDetailResponse getAnnouncement(Long announcementId/**, MemberInfoObject memberInfoObject**/) {
+//        Long memberId = memberInfoObject.getMemberId();
+
+        AnnouncementEntity ae = announcementJpaRepository.findById(announcementId)
                 .orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
 
-        String applicationConditions = ar.getApplicationConditions();
+        ConditionEntity ce = conditionJpaRepository.findByAnnouncementEntity(ae)
+                .orElseThrow(() -> new ConditionException(CONDITION_NOT_FOUND));
 
-        Map<String, Boolean> checkPossibility = new HashMap<>();
+//        MemberPrivateInfo memberPrivateInfo = member.getMemberPrivateInfo();
+//        String applicationConditions = ae.getApplicationConditions();
+//        Map<String, Boolean> checkPossibility = new HashMap<>();
 
-//        checkPossibility.put();
+        ae.updateStatus(LocalDate.now());
+        announcementJpaRepository.save(ae);
+        long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
+        String remainingDaysToString = "D-" + remainingDay;
+        String applyPossible = announcementManager.checkEligibility(ae, 2L);
+        String supportAmount = ae.getSupportAmount() + "만원";
+        List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split(",")).toList();
 
-
-        AnnouncementDetailResponse.of(ar.getScholarShipName(), ar.getScholarShipFoundation(), ar.getSupportAmount(),
-                ar.getApplicationPeriod(), ar.getHashTag(), ar.getApplicationConditions(), ar.getDetailContents());
-        return null;
+        return AnnouncementDetailResponse.of(ae.getScholarShipName(), ae.getScholarShipFoundation(),
+                remainingDaysToString, applyPossible, supportAmount, ae.getApplicationPeriod(), ae.getHashTag(), applyCondition, ae.getDetailContents());
     }
 }

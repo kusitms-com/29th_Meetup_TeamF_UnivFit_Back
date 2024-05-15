@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -66,6 +67,8 @@ public class AnnouncementManager {
             List<String> allowedUnderPrivilegedTypes = Arrays.asList(condition.getUnderPrivilegedInfo().split("\\s*,\\s*"));
             underPrevilegedMatch = allowedUnderPrivilegedTypes.contains(memberInfo.getUnderPrivilegedInfo());
         }
+        int currentYear = Year.now().getValue();
+        int age = currentYear - memberInfo.getBirthYear();
 
         return (condition.getSchoolType() == null || Objects.equals(condition.getSchoolType(), memberInfo.getSchoolType())) &&
                 (condition.getSchoolName() == null || Objects.equals(condition.getSchoolName(), memberInfo.getSchoolName())) &&
@@ -75,7 +78,7 @@ public class AnnouncementManager {
                 (condition.getResidence() == null || Objects.equals(condition.getResidence(), memberInfo.getResidence())) &&
                 (condition.getResidenceType() == null || Objects.equals(condition.getResidenceType(), memberInfo.getResidenceType())) &&
                 (condition.getGender() == null || Objects.equals(condition.getGender(), memberInfo.getGender())) &&
-                (condition.getAge() == null || Objects.equals(condition.getAge(), memberInfo.getAge())) &&
+                (condition.getAge() == null || Objects.equals(condition.getAge(), age)) &&
                 underPrevilegedMatch;
     }
 

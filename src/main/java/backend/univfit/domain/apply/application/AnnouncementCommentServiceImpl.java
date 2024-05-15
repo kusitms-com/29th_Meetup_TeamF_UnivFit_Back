@@ -3,6 +3,7 @@ package backend.univfit.domain.apply.application;
 import backend.univfit.domain.apply.api.dto.request.CommentRequest;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementDetailResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
+import backend.univfit.domain.apply.api.dto.response.CommentResponse;
 import backend.univfit.domain.apply.api.dto.response.ScholarShipFoundationResponse;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.exception.AnnouncementException;
@@ -40,5 +41,18 @@ public class AnnouncementCommentServiceImpl implements AnnouncementCommentServic
 
         CommentEntity comment = CommentRequest.toEntity(commentRequest.commentContents(), ae, member);
         commentJpaRepository.save(comment);
+    }
+
+    @Override
+    public List<CommentResponse> getAnnouncementComments(Long announcementId) {
+        AnnouncementEntity ae = announcementJpaRepository.findById(announcementId)
+                .orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
+
+        return commentJpaRepository.findByAnnouncementEntity(ae)
+                .stream()
+                .map(c -> {
+                    Long memberId = c.getMember().getId();
+                    return CommentResponse.of(memberId, c.getMember().getNickName(), c.getCommentContent());
+                }).toList();
     }
 }

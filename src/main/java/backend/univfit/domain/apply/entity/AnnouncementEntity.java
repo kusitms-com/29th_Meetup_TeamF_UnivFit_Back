@@ -50,6 +50,7 @@ public class AnnouncementEntity {
     @Lob
     private String applicationPeriod; //지원기간
 
+
     public void updateStatus(LocalDate currentDate) {
         if (currentDate.isBefore(startApplyDate)) {
             this.announcementStatus = AnnouncementStatus.UPCOMING;

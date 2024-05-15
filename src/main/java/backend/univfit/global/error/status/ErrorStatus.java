@@ -28,6 +28,9 @@ public enum ErrorStatus implements BaseErrorCode {
     //RequiredDocument 관련 에러
     REQUIRED_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND,"ANNOUNCEMENT_001","해당 필요한 서류를 찾을 수 없습니다."),
 
+    //ScholarShipFoundation 관련 에러
+    SCHOLARSHIP_FOUNDATION_NOT_FOUND(HttpStatus.NOT_FOUND,"SCHOLARSHIP_FOUNDATION_001","재단 상세정보를 찾을 수 없습니다."),
+
 
     //Body 에러
     INVALID_BODY(HttpStatus.BAD_REQUEST, "BODY_ERROR", "Body가 올바르지 않습니다."),

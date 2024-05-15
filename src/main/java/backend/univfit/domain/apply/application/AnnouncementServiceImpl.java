@@ -3,13 +3,17 @@ package backend.univfit.domain.apply.application;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementDetailResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementResponse;
+import backend.univfit.domain.apply.api.dto.response.ScholarShipFoundationResponse;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.entity.ConditionEntity;
+import backend.univfit.domain.apply.entity.ScholarShipFoundationEntity;
 import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
 import backend.univfit.domain.apply.exception.AnnouncementException;
 import backend.univfit.domain.apply.exception.ConditionException;
+import backend.univfit.domain.apply.exception.ScholarShipFoundationException;
 import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
 import backend.univfit.domain.apply.repository.ConditionJpaRepository;
+import backend.univfit.domain.apply.repository.ScholarShipFoundationJpaRepository;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.entity.MemberPrivateInfo;
 import backend.univfit.domain.member.exception.MemberException;
@@ -34,8 +38,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementJpaRepository announcementJpaRepository;
     private final AnnouncementManager announcementManager;
     private final ConditionJpaRepository conditionJpaRepository;
-    private final MemberPrivateInfoJpaRepository memberPrivateInfoJpaRepository;
-    private final MemberJpaRepository memberJpaRepository;
+    //    private final MemberPrivateInfoJpaRepository memberPrivateInfoJpaRepository;
+//    private final MemberJpaRepository memberJpaRepository;
+    private final ScholarShipFoundationJpaRepository scholarShipFoundationJpaRepository;
 
     /**
      * 전체장학금 조회
@@ -100,5 +105,15 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         return AnnouncementDetailResponse.of(ae.getScholarShipName(), ae.getScholarShipFoundation(),
                 remainingDaysToString, applyPossible, supportAmount, ae.getApplicationPeriod(), ae.getHashTag(), applyCondition, ae.getDetailContents());
+    }
+
+    @Override
+    public ScholarShipFoundationResponse getScholarShipFoundationContents(Long announcementId) {
+        AnnouncementEntity ae = announcementJpaRepository.findById(announcementId)
+                .orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
+
+        return ScholarShipFoundationResponse.of(scholarShipFoundationJpaRepository.findByAnnouncementEntity(ae)
+                .orElseThrow(() -> new ScholarShipFoundationException(SCHOLARSHIP_FOUNDATION_NOT_FOUND)).getFoundationInformation()
+        );
     }
 }

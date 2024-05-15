@@ -99,7 +99,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         announcementJpaRepository.save(ae);
         long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
         String remainingDaysToString = "D-" + remainingDay;
-        String applyPossible = announcementManager.checkEligibility(ae, 2L);
+        String applyPossible = announcementManager.checkEligibility(ae, 1L);
         String supportAmount = ae.getSupportAmount() + "만원";
         List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split(",")).toList();
 

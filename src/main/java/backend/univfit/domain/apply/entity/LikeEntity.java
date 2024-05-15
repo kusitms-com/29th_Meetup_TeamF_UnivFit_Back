@@ -1,5 +1,6 @@
 package backend.univfit.domain.apply.entity;
 
+import backend.univfit.domain.apply.application.AnnouncementLikeService;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
@@ -25,4 +26,8 @@ public class LikeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public static LikeEntity of(Long id, AnnouncementEntity announcementEntity, Member member) {
+        return new LikeEntity(id, announcementEntity, member);
+    }
 }

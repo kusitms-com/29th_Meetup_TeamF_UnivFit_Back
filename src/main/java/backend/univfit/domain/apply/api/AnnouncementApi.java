@@ -8,6 +8,7 @@ import backend.univfit.domain.apply.api.dto.response.AnnouncementResponse;
 import backend.univfit.global.ApiResponse;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
 import backend.univfit.global.argumentResolver.customAnnotation.MemberInfo;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,7 @@ public class AnnouncementApi {
                                                                    /**,@MemberInfo MemberInfoObject memberInfoObject**/) {
         return ApiResponse.onSuccess(announcementService.getAnnouncement(announcementId/**,memberInfoObject**/));
     }
+
 
     /**
      * 재단 정보 조회

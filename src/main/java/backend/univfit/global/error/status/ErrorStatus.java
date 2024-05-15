@@ -31,6 +31,10 @@ public enum ErrorStatus implements BaseErrorCode {
     //ScholarShipFoundation 관련 에러
     SCHOLARSHIP_FOUNDATION_NOT_FOUND(HttpStatus.NOT_FOUND,"SCHOLARSHIP_FOUNDATION_001","재단 상세정보를 찾을 수 없습니다."),
 
+    //Like 관련 에러
+    LIKE_ERROR(HttpStatus.NOT_FOUND,"LIKE_001","좋아요를 조회 시 오류가 발생하였습니다."),
+    LIKE_IS_EXIST(HttpStatus.BAD_REQUEST, "LIKE_002", "이미 좋아요를 누른 공고입니다."),
+
 
     //Body 에러
     INVALID_BODY(HttpStatus.BAD_REQUEST, "BODY_ERROR", "Body가 올바르지 않습니다."),

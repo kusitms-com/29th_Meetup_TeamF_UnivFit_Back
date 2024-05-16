@@ -3,6 +3,7 @@ package backend.univfit.domain.member.application;
 import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
 import backend.univfit.domain.member.dto.request.OnboardingRequest;
 import backend.univfit.domain.member.dto.response.AccessTokenResponse;
+import backend.univfit.domain.member.dto.response.OnboardingResponse;
 import backend.univfit.domain.member.entity.KakaoSocialLogin;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.entity.MemberPrivateInfo;
@@ -104,6 +105,17 @@ public class OnboardService {
         member.setNickName(nickName);
         memberJpaRepository.save(member);
 
+        if(mio.getSocialLoginInfo().equals(NAVER)){
+            NaverSocialLogin nsl = naverSocialLoginJpaRepository.findById(mio.getSocialPK()).get();
+            nsl.setMember(member);
+            naverSocialLoginJpaRepository.save(nsl);
+        }
+        if(mio.getSocialLoginInfo().equals(KAKAO)){
+            KakaoSocialLogin ksl = kakaoSocialLoginJpaRepository.findById(mio.getSocialPK()).get();
+            ksl.setMember(member);
+            kakaoSocialLoginJpaRepository.save(ksl);
+        }
+
         log.info("socialLoginInfo = {}", mio.getSocialLoginInfo());
         String serviceAccessToken = JwtUtils.createAccessToken(mio.getSocialLoginInfo(), mio.getSocialPK(), member.getId(), jwtSecret);
 
@@ -165,4 +177,53 @@ public class OnboardService {
     }
 
 
+    public OnboardingResponse updateOnboarding(MemberInfoObject mio) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+        MemberPrivateInfo memberPrivateInfo = member.getMemberPrivateInfo();
+
+        Float totalFullGrade = null;
+        Float totalGrade = null;
+        if(memberPrivateInfo.getTotalGradeOfFive() != null){
+            totalFullGrade = 4.5f;
+            totalGrade = memberPrivateInfo.getTotalGradeOfFive();
+        }
+        if(memberPrivateInfo.getTotalGradeOfThree() != null){
+            totalFullGrade = 4.3f;
+            totalGrade = memberPrivateInfo.getTotalGradeOfThree();
+        }
+
+        Float lastFullGrade = null;
+        Float lastGrade = null;
+        if(memberPrivateInfo.getLastGradeOfFive() != null){
+            lastFullGrade = 4.5f;
+            lastGrade = memberPrivateInfo.getLastGradeOfFive();
+        }
+        if(memberPrivateInfo.getLastGradeOfThree() != null){
+            lastFullGrade = 4.3f;
+            lastGrade = memberPrivateInfo.getLastGradeOfThree();
+        }
+
+
+        return OnboardingResponse.of(
+                memberPrivateInfo.getSchoolType().ordinal(),
+                memberPrivateInfo.getSchoolName(),
+                memberPrivateInfo.getSchoolLocation(),
+                memberPrivateInfo.getDeptType(),
+                memberPrivateInfo.getDeptName(),
+                memberPrivateInfo.getIsPresent(),
+                memberPrivateInfo.getSemester(),
+                memberPrivateInfo.getResidence(),
+                memberPrivateInfo.getResidenceType(),
+                memberPrivateInfo.getGender().ordinal(),
+                memberPrivateInfo.getBirthYear(),
+                memberPrivateInfo.getUnderPrivilegedInfo(),
+                totalFullGrade,
+                totalGrade,
+                lastFullGrade,
+                lastGrade,
+                memberPrivateInfo.getIncomeQuality(),
+                memberPrivateInfo.getMonthlyIncome(),
+                memberPrivateInfo.getSupportSection()
+        );
+    }
 }

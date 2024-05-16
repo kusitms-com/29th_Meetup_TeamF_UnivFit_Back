@@ -9,9 +9,11 @@ import backend.univfit.domain.apply.repository.ApplyJpaRepository;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,15 +28,24 @@ public class AnnouncementCalandarService {
         List<ApplyEntity> applyEntityList = applyJpaRepository.findAllByMember(member);
 
         ArrayList<Integer> dayList = new ArrayList<>();
+        ArrayList<Integer> lastDayList = new ArrayList<>();
+
+        LocalDate now = LocalDate.now();
 
         for(ApplyEntity ae : applyEntityList){
             AnnouncementEntity announcementEntity = ae.getAnnouncementEntity();
             if(announcementEntity.getEndDocumentDate().getYear() == year && announcementEntity.getEndDocumentDate().getMonthValue() == month){
-                dayList.add(ae.getAnnouncementEntity().getEndDocumentDate().getDayOfMonth());
+                if(now.isAfter(announcementEntity.getEndDocumentDate())){
+                    //지원마감일 지났을 때
+                    lastDayList.add(ae.getAnnouncementEntity().getEndDocumentDate().getDayOfMonth());
+                }
+                else{
+                    dayList.add(ae.getAnnouncementEntity().getEndDocumentDate().getDayOfMonth());
+                }
             }
         }
 
-        return AnnouncementCalandarYearMonthResponse.of(dayList);
+        return AnnouncementCalandarYearMonthResponse.of(lastDayList,dayList);
     }
 
     public AnnouncementCalandarYearMonthDayResponse getAnnouncement(MemberInfoObject mio, Integer year, Integer month, Integer day) {

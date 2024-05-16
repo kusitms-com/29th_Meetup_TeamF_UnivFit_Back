@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "document_table")
 @Getter
@@ -21,6 +23,8 @@ public class DocumentEntity {
     private String documentName;
 
     private String issuer;
+    private LocalDate issueDate;
+
     private String memo;
 
     @ManyToOne(fetch = FetchType.LAZY)

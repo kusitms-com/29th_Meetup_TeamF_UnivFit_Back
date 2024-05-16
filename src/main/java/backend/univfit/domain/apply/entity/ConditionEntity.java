@@ -33,8 +33,7 @@ public class ConditionEntity {
     private Integer semester;
     private String residence;
 
-    @Enumerated(EnumType.STRING)
-    private ResidenceType residenceType;
+    private Integer residenceType;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -49,8 +48,7 @@ public class ConditionEntity {
     private Integer incomeQuality;
     private Integer monthlyIncome;
 
-    @Enumerated(EnumType.STRING)
-    private SupportSection supportSection;
+    private Integer supportSection;
 
     private String exceptionValue;
 

@@ -21,7 +21,6 @@ public class CommentAnnouncementApi {
 
     /**
      * 공고 내 댓글 작성 API
-     *
      * @param commentRequest
      * @param announcementId
      * @return
@@ -33,6 +32,11 @@ public class CommentAnnouncementApi {
         return ApiResponse.onSuccess("댓글이 성공적으로 생성되었습니다.");
     }
 
+    /**
+     * 공고 내 댓글 전체 조회
+     * @param announcementId
+     * @return
+     */
     @GetMapping("/{announcementId}/comments")
     public ApiResponse<List<CommentResponse>> getAnnouncementComments(@PathVariable Long announcementId) {
         return ApiResponse.onSuccess(announcementCommentService.getAnnouncementComments(announcementId));

@@ -17,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static backend.univfit.global.error.status.ErrorStatus.ANNOUNCEMENT_NOT_FOUND;
@@ -52,7 +55,23 @@ public class AnnouncementCommentServiceImpl implements AnnouncementCommentServic
                 .stream()
                 .map(c -> {
                     Long memberId = c.getMember().getId();
-                    return CommentResponse.of(memberId, c.getMember().getNickName(), c.getCommentContent());
+                    String beforeTime = formatRelativeDate(c.getCreatedAt(), LocalDateTime.now());
+                    return CommentResponse.of(memberId, c.getMember().getNickName(), c.getCommentContent(), beforeTime);
                 }).toList();
+    }
+    private String formatRelativeDate(LocalDateTime createdAt, LocalDateTime now) {
+        Period period = Period.between(createdAt.toLocalDate(), now.toLocalDate());
+        long totalDays = ChronoUnit.DAYS.between(createdAt, now);
+        long weeks = totalDays / 7;
+        long hours = ChronoUnit.HOURS.between(createdAt, now);
+        long minutes = ChronoUnit.MINUTES.between(createdAt, now);
+
+        if (period.getYears() > 0) return period.getYears() + "년 전";
+        else if (period.getMonths() > 0) return period.getMonths() + "개월 전";
+        else if (weeks > 0) return weeks + "주 전";
+        else if (totalDays > 0) return totalDays + "일 전";
+        else if (hours > 0) return hours + "시간 전";
+        else if (minutes > 0) return minutes + "분 전";
+        else return "방금 전";
     }
 }

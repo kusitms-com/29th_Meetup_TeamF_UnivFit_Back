@@ -3,12 +3,14 @@ package backend.univfit.domain.member.api;
 import backend.univfit.domain.member.dto.request.MakeNickNameRequest;
 import backend.univfit.domain.member.dto.request.OnboardingRequest;
 import backend.univfit.domain.member.dto.response.AccessTokenResponse;
+import backend.univfit.domain.member.dto.response.OnboardingResponse;
 import backend.univfit.global.ApiResponse;
 import backend.univfit.domain.member.application.OnboardService;
 import backend.univfit.domain.member.dto.response.LoginResponse;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
 import backend.univfit.global.argumentResolver.customAnnotation.MemberInfo;
 import backend.univfit.global.dto.response.GeneralResponse;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +37,10 @@ public class OnboardApi {
     public ApiResponse<GeneralResponse> onboarding(@RequestBody OnboardingRequest obr,
                                                    @MemberInfo MemberInfoObject mio){
         return ApiResponse.onSuccess(onboardService.onboarding(obr, mio));
+    }
+
+    @GetMapping("/onboards")
+    public ApiResponse<OnboardingResponse> updateOnboard(@MemberInfo MemberInfoObject mio){
+        return ApiResponse.onSuccess(onboardService.updateOnboarding(mio));
     }
 }

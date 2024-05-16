@@ -1,5 +1,7 @@
 package backend.univfit.domain.apply.api;
 
+import backend.univfit.domain.apply.api.dto.response.AnnouncementCalandarInfo;
+import backend.univfit.domain.apply.api.dto.response.AnnouncementCalandarYearMonthDayResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementCalandarYearMonthResponse;
 import backend.univfit.domain.apply.application.AnnouncementCalandarService;
 import backend.univfit.global.ApiResponse;
@@ -21,5 +23,13 @@ public class AnnouncementCalandarApi {
                                                                          @PathVariable(name = "year") Integer year,
                                                                          @PathVariable(name = "month") Integer month){
         return ApiResponse.onSuccess(acs.getDayList(mio, year, month));
+    }
+
+    @GetMapping("/calandar/{year}/{month}/{day}")
+    public ApiResponse<AnnouncementCalandarYearMonthDayResponse> getAnnouncement(@MemberInfo MemberInfoObject mio,
+                                                                                 @PathVariable(name = "year") Integer year,
+                                                                                 @PathVariable(name = "month") Integer month,
+                                                                                 @PathVariable(name = "day") Integer day){
+        return ApiResponse.onSuccess(acs.getAnnouncement(mio, year, month, day));
     }
 }

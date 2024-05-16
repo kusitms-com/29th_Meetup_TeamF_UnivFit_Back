@@ -25,6 +25,13 @@ public class AnnouncementCalandarApi {
         return ApiResponse.onSuccess(acs.getDayList(mio, year, month));
     }
 
+    @GetMapping("/calandar/list/{year}/{month}")
+    public ApiResponse<AnnouncementCalandarYearMonthDayResponse> getAnnounceList(@MemberInfo MemberInfoObject mio,
+                                                                                 @PathVariable(name = "year") Integer year,
+                                                                                 @PathVariable(name = "month") Integer month){
+        return ApiResponse.onSuccess(acs.getAnnouncementList(mio, year, month));
+    }
+
     @GetMapping("/calandar/{year}/{month}/{day}")
     public ApiResponse<AnnouncementCalandarYearMonthDayResponse> getAnnouncement(@MemberInfo MemberInfoObject mio,
                                                                                  @PathVariable(name = "year") Integer year,

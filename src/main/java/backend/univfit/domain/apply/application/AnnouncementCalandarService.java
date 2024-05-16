@@ -61,6 +61,7 @@ public class AnnouncementCalandarService {
                     announcementEntity.getEndDocumentDate().getDayOfMonth() == day){
                 AnnouncementCalandarInfo aci = AnnouncementCalandarInfo.of(
                         announcementEntity.getId(),
+                        announcementEntity.getEndDocumentDate(),
                         "더미 링크", //아직 엔티티에 반영안되어서 이렇게 함
                         announcementEntity.getScholarShipName(),
                         announcementEntity.getScholarShipFoundation(),
@@ -74,4 +75,30 @@ public class AnnouncementCalandarService {
 
     }
 
+    public AnnouncementCalandarYearMonthDayResponse getAnnouncementList(MemberInfoObject mio, Integer year, Integer month) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+
+        List<ApplyEntity> applyEntityList = applyJpaRepository.findAllByMember(member);
+
+        ArrayList<AnnouncementCalandarInfo> aciArrayList = new ArrayList<>();
+
+        for(ApplyEntity ae : applyEntityList){
+            AnnouncementEntity announcementEntity = ae.getAnnouncementEntity();
+            if(announcementEntity.getEndDocumentDate().getYear() == year && announcementEntity.getEndDocumentDate().getMonthValue() == month){
+                AnnouncementCalandarInfo aci = AnnouncementCalandarInfo.of(
+                        announcementEntity.getId(),
+                        announcementEntity.getEndDocumentDate(),
+                        "더미 링크", //아직 엔티티에 반영안되어서 이렇게 함
+                        announcementEntity.getScholarShipName(),
+                        announcementEntity.getScholarShipFoundation(),
+                        announcementEntity.getApplicationPeriod()
+                );
+                aciArrayList.add(aci);
+            }
+        }
+
+        return AnnouncementCalandarYearMonthDayResponse.of(aciArrayList);
+
+
+    }
 }

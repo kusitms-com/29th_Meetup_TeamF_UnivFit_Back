@@ -104,6 +104,17 @@ public class OnboardService {
         member.setNickName(nickName);
         memberJpaRepository.save(member);
 
+        if(mio.getSocialLoginInfo().equals(NAVER)){
+            NaverSocialLogin nsl = naverSocialLoginJpaRepository.findById(mio.getSocialPK()).get();
+            nsl.setMember(member);
+            naverSocialLoginJpaRepository.save(nsl);
+        }
+        if(mio.getSocialLoginInfo().equals(KAKAO)){
+            KakaoSocialLogin ksl = kakaoSocialLoginJpaRepository.findById(mio.getSocialPK()).get();
+            ksl.setMember(member);
+            kakaoSocialLoginJpaRepository.save(ksl);
+        }
+
         log.info("socialLoginInfo = {}", mio.getSocialLoginInfo());
         String serviceAccessToken = JwtUtils.createAccessToken(mio.getSocialLoginInfo(), mio.getSocialPK(), member.getId(), jwtSecret);
 

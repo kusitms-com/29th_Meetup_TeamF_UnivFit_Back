@@ -58,10 +58,12 @@ public class OnboardService {
                 kakaoSocialLogin = new KakaoSocialLogin();
                 kakaoSocialLogin.setKakaoNumber(socialId);
                 kakaoSocialLoginJpaRepository.save(kakaoSocialLogin);
-                socialLoginId = kakaoSocialLogin.getId();
-                socialLoginPlatForm = KAKAO;
+
             }
             member = kakaoSocialLogin.getMember();
+            socialLoginPlatForm = KAKAO;
+            socialLoginId = kakaoSocialLogin.getId();
+
 
         }
         //네이버 로그인 했을 경우
@@ -72,10 +74,12 @@ public class OnboardService {
                 naverSocialLogin = new NaverSocialLogin();
                 naverSocialLogin.setNaverNumber(socialId);
                 naverSocialLoginJpaRepository.save(naverSocialLogin);
-                socialLoginId = naverSocialLogin.getId();
-                socialLoginPlatForm = NAVER;
+
             }
             member = naverSocialLogin.getMember();
+            socialLoginPlatForm = NAVER;
+            socialLoginId = naverSocialLogin.getId();
+
         }
 
         if(member != null){

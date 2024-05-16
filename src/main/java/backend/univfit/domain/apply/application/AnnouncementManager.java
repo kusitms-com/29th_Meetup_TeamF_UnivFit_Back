@@ -95,6 +95,7 @@ public class AnnouncementManager {
 
     private boolean compareIncome(ConditionEntity condition, MemberPrivateInfo memberInfo) {
         return (condition.getIncomeQuality() == null || (condition.getIncomeQuality() >= memberInfo.getIncomeQuality())) &&
+                (condition.getSupportSection()==null || (condition.getSupportSection() >= memberInfo.getSupportSection())) &&
                 (condition.getMonthlyIncome() == null || condition.getMonthlyIncome() >= memberInfo.getMonthlyIncome());
     }
 

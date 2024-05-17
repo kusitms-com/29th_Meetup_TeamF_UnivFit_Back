@@ -19,4 +19,14 @@ public class ApplyListApi {
     public ApiResponse<ApplyListResponse> getAllApplyList(@MemberInfo MemberInfoObject mio){
         return ApiResponse.onSuccess(applyListService.getAllApplyList(mio));
     }
+
+    @GetMapping("/pass")
+    public ApiResponse<ApplyListResponse> getPassApplyList(@MemberInfo MemberInfoObject mio){
+        return ApiResponse.onSuccess(applyListService.getPassApplyList(mio));
+    }
+
+    @GetMapping("/fail")
+    public ApiResponse<ApplyListResponse> getFailApplyList(@MemberInfo MemberInfoObject mio){
+        return ApiResponse.onSuccess(applyListService.getFailApplyList(mio));
+    }
 }

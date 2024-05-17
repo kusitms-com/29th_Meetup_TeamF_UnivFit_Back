@@ -50,4 +50,64 @@ public class ApplyListService {
 
         return ApplyListResponse.of(applyList);
     }
+
+    public ApplyListResponse getPassApplyList(MemberInfoObject mio) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+
+        List<ApplyEntity> applyEntityList = applyJpaRepository.findAllByMember(member);
+        ArrayList<ApplyListEntry> applyList = new ArrayList<>();
+        for(ApplyEntity ae : applyEntityList){
+            String applyStatus = "";
+            if(ae.getApplyStatus() == ApplyStatus.PASS){
+                applyStatus = "합격";
+            }
+            else{
+                continue;
+            }
+
+            ApplyListEntry applyListEntry = ApplyListEntry.of(
+                    ae.getId(),
+                    ae.getAnnouncementEntity().getEndDocumentDate(),
+                    "더미 링크",
+                    ae.getAnnouncementEntity().getScholarShipName(),
+                    ae.getAnnouncementEntity().getScholarShipFoundation(),
+                    ae.getAnnouncementEntity().getApplicationPeriod(),
+                    applyStatus
+            );
+
+            applyList.add(applyListEntry);
+        }
+
+        return ApplyListResponse.of(applyList);
+    }
+
+    public ApplyListResponse getFailApplyList(MemberInfoObject mio) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+
+        List<ApplyEntity> applyEntityList = applyJpaRepository.findAllByMember(member);
+        ArrayList<ApplyListEntry> applyList = new ArrayList<>();
+        for(ApplyEntity ae : applyEntityList){
+            String applyStatus = "";
+            if(ae.getApplyStatus() == ApplyStatus.FAIL){
+                applyStatus = "불합격";
+            }
+            else{
+                continue;
+            }
+
+            ApplyListEntry applyListEntry = ApplyListEntry.of(
+                    ae.getId(),
+                    ae.getAnnouncementEntity().getEndDocumentDate(),
+                    "더미 링크",
+                    ae.getAnnouncementEntity().getScholarShipName(),
+                    ae.getAnnouncementEntity().getScholarShipFoundation(),
+                    ae.getAnnouncementEntity().getApplicationPeriod(),
+                    applyStatus
+            );
+
+            applyList.add(applyListEntry);
+        }
+
+        return ApplyListResponse.of(applyList);
+    }
 }

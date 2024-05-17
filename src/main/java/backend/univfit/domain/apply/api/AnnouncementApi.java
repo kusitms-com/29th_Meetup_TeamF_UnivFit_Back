@@ -41,6 +41,11 @@ public class AnnouncementApi {
         return ApiResponse.onSuccess(announcementService.getAnnouncement(announcementId/**,memberInfoObject**/));
     }
 
+    /**
+     * 장학금 공고 저장
+     * @param announcementId
+     * @return
+     */
     @PostMapping("/{announcementId}")
     public ApiResponse<?> saveAnnouncement(/**@MemberInfo MemberInfoObject memberInfoObject,**/
                                            @PathVariable Long announcementId) {
@@ -49,9 +54,10 @@ public class AnnouncementApi {
 
     }
 
-
     /**
      * 재단 정보 조회
+     * @param announcementId
+     * @return
      */
     @GetMapping("/{announcementId}/scholarship-foundations")
     public ApiResponse<ScholarShipFoundationResponse> getScholarShipFoundationContents(@PathVariable Long announcementId) {

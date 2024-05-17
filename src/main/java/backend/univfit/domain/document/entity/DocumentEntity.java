@@ -22,12 +22,17 @@ public class DocumentEntity {
 
     private String documentName;
 
+    private LocalDate issuedDate;
     private String issuer;
-    private LocalDate issueDate;
-
     private String memo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public static DocumentEntity of(Long id, String documentName, LocalDate issuedDate, String issuer, String memo,
+                                    Member member) {
+        return new DocumentEntity(id, documentName, issuedDate, issuer, memo, member);
+    }
+
 }

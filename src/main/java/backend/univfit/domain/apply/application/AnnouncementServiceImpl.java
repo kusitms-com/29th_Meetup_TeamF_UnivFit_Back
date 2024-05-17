@@ -127,7 +127,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         Long memberId = 1L;
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
         AnnouncementEntity ae = announcementJpaRepository.findById(announcementId).orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
-        applyJpaRepository.save(ApplyEntity.of(null, member, ae, ApplyStatus.NOT_YET));
+
+        applyJpaRepository.save(ApplyEntity.of(null, ApplyStatus.NOT_YET, member, ae));
     }
 
 

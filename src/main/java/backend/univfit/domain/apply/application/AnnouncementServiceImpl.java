@@ -5,6 +5,7 @@ import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementResponse;
 import backend.univfit.domain.apply.api.dto.response.ScholarShipFoundationResponse;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
+import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.apply.entity.ConditionEntity;
 import backend.univfit.domain.apply.entity.ScholarShipFoundationEntity;
 import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
@@ -12,6 +13,7 @@ import backend.univfit.domain.apply.exception.AnnouncementException;
 import backend.univfit.domain.apply.exception.ConditionException;
 import backend.univfit.domain.apply.exception.ScholarShipFoundationException;
 import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
+import backend.univfit.domain.apply.repository.ApplyJpaRepository;
 import backend.univfit.domain.apply.repository.ConditionJpaRepository;
 import backend.univfit.domain.apply.repository.ScholarShipFoundationJpaRepository;
 import backend.univfit.domain.member.entity.Member;
@@ -39,8 +41,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementManager announcementManager;
     private final ConditionJpaRepository conditionJpaRepository;
     //    private final MemberPrivateInfoJpaRepository memberPrivateInfoJpaRepository;
-//    private final MemberJpaRepository memberJpaRepository;
+    private final MemberJpaRepository memberJpaRepository;
     private final ScholarShipFoundationJpaRepository scholarShipFoundationJpaRepository;
+    private final ApplyJpaRepository applyJpaRepository;
 
     /**
      * 전체장학금 조회
@@ -116,4 +119,15 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 .orElseThrow(() -> new ScholarShipFoundationException(SCHOLARSHIP_FOUNDATION_NOT_FOUND)).getFoundationInformation()
         );
     }
+
+    @Override
+    public void saveAnnouncement(Long announcementId) {
+//        Long memberId = memberInfoObject.getMemberId();
+        Long memberId = 1L;
+        Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
+        AnnouncementEntity ae = announcementJpaRepository.findById(announcementId).orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
+        applyJpaRepository.save(ApplyEntity.of(null, member, ae));
+    }
+
+
 }

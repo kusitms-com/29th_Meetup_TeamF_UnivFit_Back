@@ -15,5 +15,5 @@ public interface AnnouncementService {
 
     ScholarShipFoundationResponse getScholarShipFoundationContents(Long announcementId);
 
-
+    void saveAnnouncement(Long announcementId/**, MemberInfoObject memberInfoObject**/);
 }

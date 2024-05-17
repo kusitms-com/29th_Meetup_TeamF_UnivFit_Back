@@ -35,6 +35,10 @@ public enum ErrorStatus implements BaseErrorCode {
     LIKE_ERROR(HttpStatus.NOT_FOUND,"LIKE_001","좋아요를 조회 시 오류가 발생하였습니다."),
     LIKE_IS_EXIST(HttpStatus.BAD_REQUEST, "LIKE_002", "이미 좋아요를 누른 공고입니다."),
 
+    //Document 관련 에러
+    DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "DOCUMENT_001", "서류를 찾지 못하였습니다."),
+    DOCUMENT_INVALID_BODY(HttpStatus.BAD_REQUEST, "DOCUMENT_002", "필수항목을 입력해주세요."),
+
 
     //Body 에러
     INVALID_BODY(HttpStatus.BAD_REQUEST, "BODY_ERROR", "Body가 올바르지 않습니다."),

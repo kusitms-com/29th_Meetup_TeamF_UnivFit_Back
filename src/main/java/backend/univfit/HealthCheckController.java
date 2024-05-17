@@ -9,5 +9,10 @@ public class HealthCheckController {
     public String hello() {
         return "Hello, UnivFit!";
     }
+
+    @GetMapping("/health-check")
+    public String check() {
+        return "Health-Check-Sucess";
+    }
 }
 

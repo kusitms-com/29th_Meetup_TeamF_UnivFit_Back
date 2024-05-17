@@ -17,7 +17,7 @@ public class FitAnnouncementApi {
     private final FitAnnouncementService fitAnnouncementService;
 
     @GetMapping("/recommendations")
-    public ApiResponse<AnnouncementListResponse> getAnnouncementList(@RequestParam String status
+    public ApiResponse<AnnouncementListResponse> getAnnouncementList(@RequestParam(required = false, defaultValue = "전체") String status
                                                                      /**, @MemberInfo MemberInfoObject memberInfoObject**/) {
         return ApiResponse.onSuccess(fitAnnouncementService.getAnnouncementList(status));
     }

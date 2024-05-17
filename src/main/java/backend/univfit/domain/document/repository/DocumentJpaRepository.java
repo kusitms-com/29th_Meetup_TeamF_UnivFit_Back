@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface DocumentJpaRepository extends JpaRepository<DocumentEntity, Long> {
     Optional<DocumentEntity> findByDocumentName(String documentName);
     List<DocumentEntity> findByMember(Member member);
-    DocumentEntity findByIdAndMember(Long documentId,Member member);
+    Optional<DocumentEntity> findByIdAndMember(Long documentId,Member member);
 
 }

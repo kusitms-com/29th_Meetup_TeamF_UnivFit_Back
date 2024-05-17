@@ -1,7 +1,9 @@
 package backend.univfit.domain.document.api;
 
 import backend.univfit.domain.document.api.dto.request.CreateDocumentRequest;
+import backend.univfit.domain.document.api.dto.request.UpdateDocumentRequest;
 import backend.univfit.domain.document.api.dto.response.DocumentListResponse;
+import backend.univfit.domain.document.api.dto.response.DocumentResponse;
 import backend.univfit.domain.document.application.DocumentService;
 import backend.univfit.global.ApiResponse;
 import jakarta.validation.Valid;
@@ -35,6 +37,26 @@ public class DocumentApi {
         return ApiResponse.onSuccess(documentService.getAllDocuments(/**memberInfoObject**/));
     }
 
+    /**
+     * 내가 보유한 특정 서류 수정
+     * @param updateDocumentRequest
+     * @param documentId
+     * @return
+     */
+    @PatchMapping("/documents/{documentId}")
+    public ApiResponse<DocumentResponse> updateDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/
+                                                        @RequestBody UpdateDocumentRequest updateDocumentRequest,
+                                                        @PathVariable Long documentId) {
+        return ApiResponse.onSuccess(
+                documentService.updateDocument(updateDocumentRequest,/*memberInfoObject,*/ documentId)
+        );
+    }
+
+    /**
+     * 내가 보유한 특정 서류 삭제
+     * @param documentId
+     * @return
+     */
     @DeleteMapping("/documents/{documentId}")
     public ApiResponse<?> deleteDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/
                                          @PathVariable Long documentId) {

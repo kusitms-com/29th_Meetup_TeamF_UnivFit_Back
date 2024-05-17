@@ -9,6 +9,7 @@ import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.apply.entity.ConditionEntity;
 import backend.univfit.domain.apply.entity.ScholarShipFoundationEntity;
 import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
+import backend.univfit.domain.apply.entity.enums.ApplyStatus;
 import backend.univfit.domain.apply.exception.AnnouncementException;
 import backend.univfit.domain.apply.exception.ConditionException;
 import backend.univfit.domain.apply.exception.ScholarShipFoundationException;
@@ -126,7 +127,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         Long memberId = 1L;
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
         AnnouncementEntity ae = announcementJpaRepository.findById(announcementId).orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
-        applyJpaRepository.save(ApplyEntity.of(null, member, ae));
+        applyJpaRepository.save(ApplyEntity.of(null, ApplyStatus.NOT_YET, member, ae));
     }
 
 

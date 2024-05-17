@@ -1,5 +1,6 @@
 package backend.univfit.domain.apply.entity;
 
+import backend.univfit.domain.apply.entity.enums.ApplyStatus;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
@@ -18,6 +19,9 @@ public class ApplyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private ApplyStatus applyStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -26,8 +30,8 @@ public class ApplyEntity {
     @JoinColumn(name = "apply_announcement_id")
     private AnnouncementEntity announcementEntity;
 
-    public static ApplyEntity of(Long id, Member member, AnnouncementEntity announcementEntity) {
-        return new ApplyEntity(id, member, announcementEntity);
+    public static ApplyEntity of(Long id, ApplyStatus applyStatus, Member member, AnnouncementEntity announcementEntity) {
+        return new ApplyEntity(id, applyStatus, member, announcementEntity);
     }
 
 }

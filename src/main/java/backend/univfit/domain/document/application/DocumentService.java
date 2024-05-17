@@ -7,5 +7,5 @@ public interface DocumentService {
 //    void createDocuments(MemberInfoObject memberInfoObject, CreateDocumentRequest createDocumentRequest);
     void createDocuments(CreateDocumentRequest createDocumentRequest);
 
-    DocumentListResponse getAllDocuments();
+    DocumentListResponse getAllDocuments(/**@MemberInfo MemberInfoObject memberInfoObject,**/);
 }

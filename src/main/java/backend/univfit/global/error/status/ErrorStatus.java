@@ -37,6 +37,7 @@ public enum ErrorStatus implements BaseErrorCode {
 
     //Document 관련 에러
     DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "DOCUMENT_001", "서류를 찾지 못하였습니다."),
+    DOCUMENT_INVALID_BODY(HttpStatus.BAD_REQUEST, "DOCUMENT_002", "필수항목을 입력해주세요."),
 
 
     //Body 에러

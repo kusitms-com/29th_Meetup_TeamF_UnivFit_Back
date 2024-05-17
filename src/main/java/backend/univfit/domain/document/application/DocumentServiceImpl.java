@@ -15,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static backend.univfit.global.error.status.ErrorStatus.DOCUMENT_NOT_FOUND;
-import static backend.univfit.global.error.status.ErrorStatus.MEMBER_NOT_FOUND;
+import static backend.univfit.global.error.status.ErrorStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,16 +30,20 @@ public class DocumentServiceImpl implements DocumentService {
 //        Long memberId = memberInfoObject.getMemberId();
         Long memberId = 1L;
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
+        if (createDocumentRequest.documentName().isBlank() || createDocumentRequest.documentName().isEmpty()
+                || createDocumentRequest.issuedDate() == null) {
+            throw new DocumentException(DOCUMENT_INVALID_BODY);
+        }
         DocumentEntity document = CreateDocumentRequest.toEntity(
                 createDocumentRequest.documentName(), createDocumentRequest.issuedDate(),
                 createDocumentRequest.issuer(), createDocumentRequest.memo(), member
         );
-
         documentJpaRepository.save(document);
     }
 
     @Override
-    public DocumentListResponse getAllDocuments() {
+    public DocumentListResponse getAllDocuments(/**MemberInfoObject memberInfoObject**/) {
+        //        Long memberId = memberInfoObject.getMemberId();
         Long memberId = 1L;
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 

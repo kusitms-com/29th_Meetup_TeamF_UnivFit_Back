@@ -7,8 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record CreateDocumentRequest(
-        @NotNull
+//        @NotNull(message = "필수 항목을 입력해주세요.")
         String documentName,
+
+//        @NotNull(message = "필수 항목을 입력해주세요.")
         LocalDate issuedDate,
         String issuer,
         String memo

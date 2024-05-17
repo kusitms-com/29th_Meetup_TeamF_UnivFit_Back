@@ -4,6 +4,7 @@ import backend.univfit.domain.document.api.dto.request.CreateDocumentRequest;
 import backend.univfit.domain.document.api.dto.response.DocumentListResponse;
 import backend.univfit.domain.document.application.DocumentService;
 import backend.univfit.global.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class DocumentApi {
      */
     @PostMapping("/documents")
     public ApiResponse<?> createDocuments(/**@MemberInfo MemberInfoObject memberInfoObject,**/
-                                          @RequestBody CreateDocumentRequest createDocumentRequest) {
+                                          /*@Valid*/ @RequestBody CreateDocumentRequest createDocumentRequest) {
         documentService.createDocuments(/**memberInfoObject,**/ createDocumentRequest);
         return ApiResponse.onSuccess("서류가 성공적으로 등록 되었습니다.");
     }

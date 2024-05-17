@@ -65,6 +65,11 @@ public class DocumentApi {
         return ApiResponse.onSuccess(documentService.getDocument(/*memberInfoObject*/documentId));
     }
 
+    /**
+     * 내가 보유한 특정 서류 삭제
+     * @param documentId
+     * @return
+     */
     @DeleteMapping("/documents/{documentId}")
     public ApiResponse<?> deleteDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/
                                                            @PathVariable Long documentId) {

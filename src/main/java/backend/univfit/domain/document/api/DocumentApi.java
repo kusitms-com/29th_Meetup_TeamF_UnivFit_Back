@@ -31,8 +31,16 @@ public class DocumentApi {
      * @return
      */
     @GetMapping("/documents")
-    public ApiResponse<DocumentListResponse> createDocuments(/**@MemberInfo MemberInfoObject memberInfoObject,**/) {
+    public ApiResponse<DocumentListResponse> getAllDocuments(/**@MemberInfo MemberInfoObject memberInfoObject,**/) {
         return ApiResponse.onSuccess(documentService.getAllDocuments(/**memberInfoObject**/));
+    }
+
+    @DeleteMapping("/documents/{documentId}")
+    public ApiResponse<?> deleteDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/
+                                         @PathVariable Long documentId) {
+
+        documentService.deleteDocument(/*memberInfoObject,*/ documentId);
+        return ApiResponse.onSuccess("서류가 성공적으로 삭제되었습니다.");
     }
 
 

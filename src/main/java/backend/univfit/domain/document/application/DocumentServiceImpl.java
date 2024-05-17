@@ -54,4 +54,13 @@ public class DocumentServiceImpl implements DocumentService {
 
         return DocumentListResponse.of(documentResponseList);
     }
+
+    @Override
+    public void deleteDocument(/**MemberInfoObject memberInfoObject**/Long documentId) {
+        //        Long memberId = memberInfoObject.getMemberId();
+        Long memberId = 1L;
+        Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
+        DocumentEntity document = documentJpaRepository.findByIdAndMember(documentId, member);
+        documentJpaRepository.delete(document);
+    }
 }

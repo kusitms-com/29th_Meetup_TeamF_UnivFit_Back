@@ -8,4 +8,6 @@ public interface DocumentService {
     void createDocuments(CreateDocumentRequest createDocumentRequest);
 
     DocumentListResponse getAllDocuments(/**@MemberInfo MemberInfoObject memberInfoObject,**/);
+
+    void deleteDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/Long documentId);
 }

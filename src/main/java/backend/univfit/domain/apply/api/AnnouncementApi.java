@@ -41,6 +41,14 @@ public class AnnouncementApi {
         return ApiResponse.onSuccess(announcementService.getAnnouncement(announcementId/**,memberInfoObject**/));
     }
 
+    @PostMapping("/{announcementId}")
+    public ApiResponse<?> saveAnnouncement(/**@MemberInfo MemberInfoObject memberInfoObject,**/
+                                           @PathVariable Long announcementId) {
+        announcementService.saveAnnouncement(announcementId/*,memberInfoObject*/);
+        return ApiResponse.onSuccess("장학금이 성공적으로 저장되었습니다.");
+
+    }
+
 
     /**
      * 재단 정보 조회

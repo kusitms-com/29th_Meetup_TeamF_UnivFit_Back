@@ -26,6 +26,8 @@ public class ApplyEntity {
     @JoinColumn(name = "apply_announcement_id")
     private AnnouncementEntity announcementEntity;
 
-
+    public static ApplyEntity of(Long id, Member member, AnnouncementEntity announcementEntity) {
+        return new ApplyEntity(id, member, announcementEntity);
+    }
 
 }

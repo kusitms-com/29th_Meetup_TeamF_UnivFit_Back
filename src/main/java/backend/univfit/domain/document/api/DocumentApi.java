@@ -65,4 +65,12 @@ public class DocumentApi {
         return ApiResponse.onSuccess(documentService.getDocument(/*memberInfoObject*/documentId));
     }
 
+    @DeleteMapping("/documents/{documentId}")
+    public ApiResponse<?> deleteDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/
+                                                           @PathVariable Long documentId) {
+
+        documentService.deleteDocument(/*memberInfoObject*/documentId);
+        return ApiResponse.onSuccess("서류가 성공적으로 삭제되었습니다.");
+    }
+
 }

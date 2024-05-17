@@ -30,6 +30,9 @@ public class AnnouncementEntity {
     private LocalDate startApplyDate;  //지원시작일
     private LocalDate endFinalPassDate;   //최종합격발표일
 
+    private String scholarShipImage;
+
+
     @Enumerated(EnumType.STRING)
     private AnnouncementStatus announcementStatus;
 

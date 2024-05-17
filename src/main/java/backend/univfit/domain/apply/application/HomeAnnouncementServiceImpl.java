@@ -6,7 +6,6 @@ import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
 import backend.univfit.domain.apply.repository.LikeJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +26,7 @@ public class HomeAnnouncementServiceImpl implements HomeAnnouncementService {
                     String like = likeCount + "명이 찜했어요!";
                     return new PopularAnnouncementResponse(
                             announcement.getId(),
+                            announcement.getScholarShipImage(),
                             announcement.getScholarShipName(),
                             announcement.getScholarShipFoundation(),
                             announcement.getApplicationPeriod(),
@@ -43,7 +43,7 @@ public class HomeAnnouncementServiceImpl implements HomeAnnouncementService {
         List<AnnouncementBySearchResponse> announcementBySearchResponseList = announcementJpaRepository.findBySearchCriteria(q)
                 .stream()
                 .map(findAnnouncement -> AnnouncementBySearchResponse.of(
-                        findAnnouncement.getId(), findAnnouncement.getScholarShipName(),
+                        findAnnouncement.getId(), findAnnouncement.getScholarShipImage(), findAnnouncement.getScholarShipName(),
                         findAnnouncement.getScholarShipFoundation(), findAnnouncement.getApplicationPeriod()
                 )).toList();
 

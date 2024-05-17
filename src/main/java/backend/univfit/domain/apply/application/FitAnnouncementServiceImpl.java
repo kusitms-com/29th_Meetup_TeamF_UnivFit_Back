@@ -38,7 +38,7 @@ public class FitAnnouncementServiceImpl implements FitAnnouncementService{
                     String remainingDaysToString = "D-" + remainingDay;
                     String applyPossible = announcementManager.checkEligibility(ar, 1L);
 
-                    return AnnouncementResponse.of(ar.getId(),
+                    return AnnouncementResponse.of(ar.getId(), ar.getScholarShipImage(),
                             ar.getScholarShipName(), ar.getScholarShipFoundation(), announcementStatus,
                             ar.getApplicationPeriod(), remainingDaysToString, applyPossible
                     );

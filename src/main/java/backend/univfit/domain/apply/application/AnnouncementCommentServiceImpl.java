@@ -1,10 +1,7 @@
 package backend.univfit.domain.apply.application;
 
 import backend.univfit.domain.apply.api.dto.request.CommentRequest;
-import backend.univfit.domain.apply.api.dto.response.AnnouncementDetailResponse;
-import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
 import backend.univfit.domain.apply.api.dto.response.CommentResponse;
-import backend.univfit.domain.apply.api.dto.response.ScholarShipFoundationResponse;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.exception.AnnouncementException;
 import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;

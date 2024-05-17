@@ -82,7 +82,7 @@ public class AnnouncementLikeServiceImpl implements AnnouncementLikeService{
                     String remainingDaysToString = "D-" + remainingDay;
                     String applyPossible = announcementManager.checkEligibility(ae, 1L);
 
-                    return AnnouncementResponse.of(ae.getId(),
+                    return AnnouncementResponse.of(ae.getId(), ae.getScholarShipImage(),
                             ae.getScholarShipName(), ae.getScholarShipFoundation(), announcementStatus,
                             ae.getApplicationPeriod(), remainingDaysToString, applyPossible
                     );

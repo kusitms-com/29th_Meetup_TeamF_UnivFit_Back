@@ -7,7 +7,6 @@ import backend.univfit.domain.apply.api.dto.response.ScholarShipFoundationRespon
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.apply.entity.ConditionEntity;
-import backend.univfit.domain.apply.entity.ScholarShipFoundationEntity;
 import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
 import backend.univfit.domain.apply.entity.enums.ApplyStatus;
 import backend.univfit.domain.apply.exception.AnnouncementException;
@@ -18,12 +17,8 @@ import backend.univfit.domain.apply.repository.ApplyJpaRepository;
 import backend.univfit.domain.apply.repository.ConditionJpaRepository;
 import backend.univfit.domain.apply.repository.ScholarShipFoundationJpaRepository;
 import backend.univfit.domain.member.entity.Member;
-import backend.univfit.domain.member.entity.MemberPrivateInfo;
 import backend.univfit.domain.member.exception.MemberException;
-import backend.univfit.domain.member.exception.MemberPrivateInfoException;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
-import backend.univfit.domain.member.repository.MemberPrivateInfoJpaRepository;
-import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +36,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementJpaRepository announcementJpaRepository;
     private final AnnouncementManager announcementManager;
     private final ConditionJpaRepository conditionJpaRepository;
-    //    private final MemberPrivateInfoJpaRepository memberPrivateInfoJpaRepository;
     private final MemberJpaRepository memberJpaRepository;
     private final ScholarShipFoundationJpaRepository scholarShipFoundationJpaRepository;
     private final ApplyJpaRepository applyJpaRepository;
@@ -70,11 +64,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                     String remainingDaysToString = "D-" + remainingDay;
                     String applyPossible = announcementManager.checkEligibility(ar, 1L);
 
-                    return AnnouncementResponse.of(ar.getId(),
+                    return AnnouncementResponse.of(ar.getId(), ar.getScholarShipImage(),
                             ar.getScholarShipName(), ar.getScholarShipFoundation(), announcementStatus,
                             ar.getApplicationPeriod(), remainingDaysToString, applyPossible
                     );
                 }).toList();
+
 
         return AnnouncementListResponse.of(list, list.size());
     }
@@ -107,7 +102,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         String supportAmount = ae.getSupportAmount() + "만원";
         List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split("\\s*,\\s*")).toList();
 
-        return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
+        return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipImage(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
                 remainingDaysToString, applyPossible, supportAmount, ae.getApplicationPeriod(), ae.getHashTag(), applyCondition, ae.getDetailContents());
     }
 

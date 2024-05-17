@@ -7,5 +7,6 @@ package backend.univfit.domain.apply.entity.enums;
  * FAIL : 불합격
  */
 public enum ApplyStatus {
-    NOT_YET, APPLY, PASS, FAIL
+    NOT_YET, APPLY, PASS, FAIL;
+
 }

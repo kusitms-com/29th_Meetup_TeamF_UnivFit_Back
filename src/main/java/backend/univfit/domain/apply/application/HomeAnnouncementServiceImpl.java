@@ -23,7 +23,7 @@ public class HomeAnnouncementServiceImpl implements HomeAnnouncementService {
                 .map(objects -> {
                     AnnouncementEntity announcement = (AnnouncementEntity) objects[0];
                     Integer likeCount = (Integer) objects[1];
-                    PopularAnnouncementResponse.of(
+                    return PopularAnnouncementResponse.of(
                             announcement.getId(),
                             announcement.getScholarShipImage(),
                             announcement.getScholarShipName(),

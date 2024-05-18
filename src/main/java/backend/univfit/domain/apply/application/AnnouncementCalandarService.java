@@ -60,7 +60,7 @@ public class AnnouncementCalandarService {
             if(announcementEntity.getEndDocumentDate().getYear() == year && announcementEntity.getEndDocumentDate().getMonthValue() == month &&
                     announcementEntity.getEndDocumentDate().getDayOfMonth() == day){
                 AnnouncementCalandarInfo aci = AnnouncementCalandarInfo.of(
-                        announcementEntity.getId(),
+                        ae.getId(),
                         announcementEntity.getEndDocumentDate(),
                         "더미 링크", //아직 엔티티에 반영안되어서 이렇게 함
                         announcementEntity.getScholarShipName(),
@@ -86,7 +86,7 @@ public class AnnouncementCalandarService {
             AnnouncementEntity announcementEntity = ae.getAnnouncementEntity();
             if(announcementEntity.getEndDocumentDate().getYear() == year && announcementEntity.getEndDocumentDate().getMonthValue() == month){
                 AnnouncementCalandarInfo aci = AnnouncementCalandarInfo.of(
-                        announcementEntity.getId(),
+                        ae.getId(),
                         announcementEntity.getEndDocumentDate(),
                         "더미 링크", //아직 엔티티에 반영안되어서 이렇게 함
                         announcementEntity.getScholarShipName(),

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class AnnouncementCalandarInfo {
-    private Long id;
+    private Long applyId;
     private LocalDate endDocumentDate;
     private String announcementImageUrl;
     private String scholarShipName;
@@ -18,7 +18,7 @@ public class AnnouncementCalandarInfo {
     private String applicationPeriod;
 
     public static AnnouncementCalandarInfo of(
-            Long id,
+            Long applyId,
             LocalDate endDocumentDate,
             String announcementImageUrl,
             String scholarShipName,
@@ -26,7 +26,7 @@ public class AnnouncementCalandarInfo {
             String applicationPeriod
     ){
         return AnnouncementCalandarInfo.builder()
-                .id(id)
+                .applyId(applyId)
                 .endDocumentDate(endDocumentDate)
                 .announcementImageUrl(announcementImageUrl)
                 .scholarShipName(scholarShipName)

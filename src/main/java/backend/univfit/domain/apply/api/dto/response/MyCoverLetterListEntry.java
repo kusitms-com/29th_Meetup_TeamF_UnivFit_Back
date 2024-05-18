@@ -8,15 +8,15 @@ import lombok.*;
 @Setter
 @Builder
 public class MyCoverLetterListEntry {
-    private Long id;
+    private Long coverLetterId;
     private String title;
 
     public static MyCoverLetterListEntry of(
-            Long id,
+            Long coverLetterId,
             String title
     ){
         return MyCoverLetterListEntry.builder()
-                .id(id)
+                .coverLetterId(coverLetterId)
                 .title(title)
                 .build();
     }

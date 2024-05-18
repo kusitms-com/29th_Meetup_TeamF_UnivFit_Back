@@ -33,10 +33,10 @@ public class ApplyListApi {
         return ApiResponse.onSuccess(applyListService.getFailApplyList(mio));
     }
 
-    @GetMapping("/{announcementId}")
+    @GetMapping("/{ApplyId}")
     public ApiResponse<ApplyListDetailResponse> getApplyListDetail(@MemberInfo MemberInfoObject mio,
-                                                             @PathVariable(name = "announcementId") Long announcementId){
-        return ApiResponse.onSuccess(applyListService.getApplyListDetail(mio, announcementId));
+                                                             @PathVariable(name = "ApplyId") Long applyId){
+        return ApiResponse.onSuccess(applyListService.getApplyListDetail(mio, applyId));
     }
 
 }

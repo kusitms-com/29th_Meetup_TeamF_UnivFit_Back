@@ -11,11 +11,9 @@ import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
 import backend.univfit.domain.apply.entity.enums.ApplyStatus;
 import backend.univfit.domain.apply.exception.AnnouncementException;
 import backend.univfit.domain.apply.exception.ConditionException;
+import backend.univfit.domain.apply.exception.LikeException;
 import backend.univfit.domain.apply.exception.ScholarShipFoundationException;
-import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
-import backend.univfit.domain.apply.repository.ApplyJpaRepository;
-import backend.univfit.domain.apply.repository.ConditionJpaRepository;
-import backend.univfit.domain.apply.repository.ScholarShipFoundationJpaRepository;
+import backend.univfit.domain.apply.repository.*;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.exception.MemberException;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
@@ -39,6 +37,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final MemberJpaRepository memberJpaRepository;
     private final ScholarShipFoundationJpaRepository scholarShipFoundationJpaRepository;
     private final ApplyJpaRepository applyJpaRepository;
+    private final LikeJpaRepository likeJpaRepository;
 
     /**
      * 전체장학금 조회
@@ -90,20 +89,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         ConditionEntity ce = conditionJpaRepository.findByAnnouncementEntity(ae)
                 .orElseThrow(() -> new ConditionException(CONDITION_NOT_FOUND));
 
-//        MemberPrivateInfo memberPrivateInfo = member.getMemberPrivateInfo();
-//        String applicationConditions = ae.getApplicationConditions();
-//        Map<String, Boolean> checkPossibility = new HashMap<>();
-
         ae.updateStatus(LocalDate.now());
-        announcementJpaRepository.save(ae);
+        AnnouncementEntity announcement = announcementJpaRepository.save(ae);
         long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
         String remainingDaysToString = "D-" + remainingDay;
         String applyPossible = announcementManager.checkEligibility(ae, 1L);
         String supportAmount = ae.getSupportAmount() + "만원";
         List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split("\\s*,\\s*")).toList();
 
+        Integer likesCount = likeJpaRepository.findByAnnouncementEntity(announcement).size();
+
         return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipImage(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
-                remainingDaysToString, applyPossible, supportAmount, ae.getApplicationPeriod(), ae.getHashTag(), applyCondition, ae.getDetailContents());
+                remainingDaysToString, applyPossible, supportAmount, ae.getApplicationPeriod(),
+                ae.getHashTag(), applyCondition, ae.getDetailContents(), likesCount);
     }
 
     @Override

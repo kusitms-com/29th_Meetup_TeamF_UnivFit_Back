@@ -6,9 +6,10 @@ public record DocumentResponse(
         Long documentId,
         String documentName,
         LocalDate issuedDate,
-        String issuer
+        String issuer,
+        String memo
 ) {
-    public static DocumentResponse of(Long documentId, String documentName, LocalDate issuedDate, String issuer) {
-        return new DocumentResponse(documentId, documentName, issuedDate, issuer);
+    public static DocumentResponse of(Long documentId, String documentName, LocalDate issuedDate, String issuer,String memo) {
+        return new DocumentResponse(documentId, documentName, issuedDate, issuer, memo);
     }
 }

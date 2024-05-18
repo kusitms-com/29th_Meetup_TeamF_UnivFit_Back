@@ -125,6 +125,14 @@ public class ApplyListService {
 
         ApplyEntity applyEntity = applyJpaRepository.findByMemberAndAnnouncementEntity(member, announcementEntity);
 
+        String applyStatus = "미입력";
+        if(applyEntity.getApplyStatus() == ApplyStatus.PASS){
+            applyStatus = "합격";
+        }
+        if(applyEntity.getApplyStatus() == ApplyStatus.FAIL){
+            applyStatus = "불합격";
+        }
+
         //자소서 목록 불러오기
         List<CoverLetterEntity> coverLetterList = coverLetterJpaRepository.findAllByApplyEntity(applyEntity);
 
@@ -139,7 +147,7 @@ public class ApplyListService {
 
         return ApplyListDetailResponse.of(
                 applyEntity.getAnnouncementEntity().getId(),
-                applyEntity.getApplyStatus().toString(),
+                applyStatus,
                 applyEntity.getAnnouncementEntity().getScholarShipImage(),
                 applyEntity.getAnnouncementEntity().getScholarShipName(),
                 applyEntity.getAnnouncementEntity().getScholarShipFoundation(),

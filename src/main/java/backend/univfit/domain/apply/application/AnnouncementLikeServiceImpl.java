@@ -1,6 +1,5 @@
 package backend.univfit.domain.apply.application;
 
-import backend.univfit.domain.apply.api.dto.response.AnnouncementDetailResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
 import backend.univfit.domain.apply.api.dto.response.AnnouncementResponse;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
@@ -12,14 +11,12 @@ import backend.univfit.domain.apply.repository.LikeJpaRepository;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.exception.MemberException;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
-import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.List;
 
 import static backend.univfit.global.error.status.ErrorStatus.*;
@@ -87,9 +84,6 @@ public class AnnouncementLikeServiceImpl implements AnnouncementLikeService{
                     );
                 }).toList();
 
-
         return AnnouncementListResponse.of(list, list.size());
-
-
     }
 }

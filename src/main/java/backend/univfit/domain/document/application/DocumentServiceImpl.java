@@ -32,7 +32,7 @@ public class DocumentServiceImpl implements DocumentService {
 //        Long memberId = memberInfoObject.getMemberId();
         Long memberId = 1L;
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
-        if (createDocumentRequest.documentName().isBlank() || createDocumentRequest.documentName().isEmpty()
+        if (createDocumentRequest.documentName() == null || createDocumentRequest.documentName().isEmpty()
                 || createDocumentRequest.issuedDate() == null) {
             throw new DocumentException(DOCUMENT_INVALID_BODY);
         }
@@ -51,7 +51,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         List<DocumentResponse> documentResponseList = documentJpaRepository.findByMember(member)
                 .stream()
-                .map(d -> DocumentResponse.of(d.getId(), d.getDocumentName(), d.getIssuedDate(), d.getIssuer()))
+                .map(d -> DocumentResponse.of(d.getId(), d.getDocumentName(), d.getIssuedDate(), d.getIssuer(),d.getMemo()))
                 .toList();
 
         return DocumentListResponse.of(documentResponseList);
@@ -85,7 +85,7 @@ public class DocumentServiceImpl implements DocumentService {
                 updateDocumentRequest.issuer(), updateDocumentRequest.memo(), member));
 
         return DocumentResponse.of(updateDocument.getId(), updateDocumentRequest.documentName(), updateDocument.getIssuedDate(),
-                updateDocumentRequest.issuer());
+                updateDocument.getIssuer(), updateDocument.getMemo());
     }
 
     @Override

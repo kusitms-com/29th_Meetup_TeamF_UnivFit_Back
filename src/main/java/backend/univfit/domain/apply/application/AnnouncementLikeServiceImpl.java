@@ -84,6 +84,7 @@ public class AnnouncementLikeServiceImpl implements AnnouncementLikeService{
                     return AnnouncementResponse.of(ae.getId(), ae.getScholarShipImage(),
                             ae.getScholarShipName(), ae.getScholarShipFoundation(), announcementStatus,
                             ae.getApplicationPeriod(), remainingDay, applyPossible
+                            ae.getApplicationPeriod(), between, applyPossible
                     );
                 }).toList();
 

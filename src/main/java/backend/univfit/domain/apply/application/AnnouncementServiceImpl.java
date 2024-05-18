@@ -68,7 +68,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                     );
                 }).toList();
 
-
         return AnnouncementListResponse.of(list, list.size());
     }
 
@@ -92,7 +91,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         AnnouncementEntity announcement = announcementJpaRepository.save(ae);
         Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
         String applyPossible = announcementManager.checkEligibility(ae, 1L);
-        Integer supportAmount = ae.getSupportAmount();
+        String supportAmount = ae.getSupportAmount();
         List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split("\\s*,\\s*")).toList();
 
         Integer likesCount = likeJpaRepository.findByAnnouncementEntity(announcement).size();

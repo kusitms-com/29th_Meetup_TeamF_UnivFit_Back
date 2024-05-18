@@ -41,7 +41,7 @@ public class FitAnnouncementServiceImpl implements FitAnnouncementService{
                             ar.getScholarShipName(), ar.getScholarShipFoundation(), announcementStatus,
                             ar.getApplicationPeriod(), remainingDay, applyPossible
                     );
-                })//여기 고쳐야함
+                })
                 .filter(ar -> {
                     if (status.equals("전체")) {
                         return ar.applyPossible().equals("판단불가") || ar.applyPossible().equals("지원대상");

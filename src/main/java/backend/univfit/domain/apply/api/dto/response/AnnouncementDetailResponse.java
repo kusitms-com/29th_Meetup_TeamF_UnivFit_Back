@@ -7,9 +7,9 @@ public record AnnouncementDetailResponse(
         String scholarShipImage,
         String scholarshipName,
         String scholarshipFoundation,
-        String remainingDay,
+        Long remainingDay,
         String applyPossible,
-        String supportAmount,
+        Integer supportAmount,
         String applicationPeriod,
         String hashTag,
         List<String> applyCondition,
@@ -17,9 +17,9 @@ public record AnnouncementDetailResponse(
         String detailContents,
         Integer likes
 ) {
-    public static AnnouncementDetailResponse of(Long scholarshipId, String scholarShipImage, String scholarShipName, String scholarShipFoundation, String remainingDay,
+    public static AnnouncementDetailResponse of(Long scholarshipId, String scholarShipImage, String scholarShipName, String scholarShipFoundation, Long remainingDay,
                                                 String applyPossible,
-                                                String supportAmount,
+                                                Integer supportAmount,
                                                 String applicationPeriod, String hashTag, List<String> applyCondition,
                                                 String detailContents,
                                                 Integer likes) {

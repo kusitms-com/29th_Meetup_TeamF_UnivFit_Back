@@ -3,7 +3,7 @@ package backend.univfit.domain.apply.api.dto.response;
 import java.util.List;
 
 public record RequiredDocumentResponse(
-        Long id,
+        Long documentId,
         String documentName,
         String requiredOptions,
         Boolean memberIsHave

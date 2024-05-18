@@ -8,11 +8,11 @@ public record AnnouncementResponse(
         String scholarshipFoundation,
         String scholarshipStatus,
         String applicationPeriod,
-        String remainingDays,
+        Long remainingDays,
         String applyPossible
 ) {
     public static AnnouncementResponse of(Long scholarshipId, String scholarShipImage, String scholarshipName, String scholarshipFoundation, String scholarshipStatus,
-                                          String applicationPeriod, String remainingDays, String applyPossible) {
+                                          String applicationPeriod, Long remainingDays, String applyPossible) {
 
         return new AnnouncementResponse(scholarshipId, scholarShipImage,
                 scholarshipName,

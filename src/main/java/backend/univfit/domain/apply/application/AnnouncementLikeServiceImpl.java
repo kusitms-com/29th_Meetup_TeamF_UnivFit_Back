@@ -78,13 +78,12 @@ public class AnnouncementLikeServiceImpl implements AnnouncementLikeService{
                     announcementJpaRepository.save(ae);
 
                     String announcementStatus = announcementManager.checkAnnouncementStatus(ae);
-                    long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
-                    String remainingDaysToString = "D-" + remainingDay;
+                    Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
                     String applyPossible = announcementManager.checkEligibility(ae, 1L);
 
                     return AnnouncementResponse.of(ae.getId(), ae.getScholarShipImage(),
                             ae.getScholarShipName(), ae.getScholarShipFoundation(), announcementStatus,
-                            ae.getApplicationPeriod(), remainingDaysToString, applyPossible
+                            ae.getApplicationPeriod(), remainingDay, applyPossible
                     );
                 }).toList();
 

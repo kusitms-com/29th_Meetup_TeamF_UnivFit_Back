@@ -34,15 +34,14 @@ public class FitAnnouncementServiceImpl implements FitAnnouncementService{
                 })
                 .map(ar -> {
                     String announcementStatus = announcementManager.checkAnnouncementStatus(ar);
-                    long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ar.getEndDocumentDate());
-                    String remainingDaysToString = "D-" + remainingDay;
+                    Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ar.getEndDocumentDate());
                     String applyPossible = announcementManager.checkEligibility(ar, 1L);
 
                     return AnnouncementResponse.of(ar.getId(), ar.getScholarShipImage(),
                             ar.getScholarShipName(), ar.getScholarShipFoundation(), announcementStatus,
-                            ar.getApplicationPeriod(), remainingDaysToString, applyPossible
+                            ar.getApplicationPeriod(), remainingDay, applyPossible
                     );
-                })//여기 고쳐야함
+                })
                 .filter(ar -> {
                     if (status.equals("전체")) {
                         return ar.applyPossible().equals("판단불가") || ar.applyPossible().equals("지원대상");

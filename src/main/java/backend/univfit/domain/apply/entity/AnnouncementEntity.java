@@ -48,7 +48,7 @@ public class AnnouncementEntity {
     private String applicationConditions;
 
     @Lob
-    private Integer supportAmount;
+    private String supportAmount;
 
     @Lob
     private String applicationPeriod; //지원기간

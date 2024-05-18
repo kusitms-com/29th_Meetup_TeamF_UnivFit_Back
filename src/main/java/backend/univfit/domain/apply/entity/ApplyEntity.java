@@ -1,6 +1,7 @@
 package backend.univfit.domain.apply.entity;
 
 import backend.univfit.domain.apply.entity.enums.ApplyStatus;
+import backend.univfit.domain.coverletter.entity.CoverLetterEntity;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
@@ -29,7 +30,6 @@ public class ApplyEntity {
     @OneToOne
     @JoinColumn(name = "apply_announcement_id")
     private AnnouncementEntity announcementEntity;
-
 
 
     public static ApplyEntity of(Long id, ApplyStatus applyStatus, Member member, AnnouncementEntity announcementEntity) {

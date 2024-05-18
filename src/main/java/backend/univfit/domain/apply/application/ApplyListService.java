@@ -1,10 +1,16 @@
 package backend.univfit.domain.apply.application;
 
+import backend.univfit.domain.apply.api.dto.response.ApplyListDetailResponse;
 import backend.univfit.domain.apply.api.dto.response.ApplyListEntry;
 import backend.univfit.domain.apply.api.dto.response.ApplyListResponse;
+import backend.univfit.domain.apply.api.dto.response.MyCoverLetterListEntry;
+import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.apply.entity.enums.ApplyStatus;
+import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
 import backend.univfit.domain.apply.repository.ApplyJpaRepository;
+import backend.univfit.domain.coverletter.entity.CoverLetterEntity;
+import backend.univfit.domain.coverletter.repository.CoverLetterJpaRepository;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
@@ -20,6 +26,8 @@ import java.util.List;
 public class ApplyListService {
     private final ApplyJpaRepository applyJpaRepository;
     private final MemberJpaRepository memberJpaRepository;
+    private final AnnouncementJpaRepository announcementJpaRepository;
+    private final CoverLetterJpaRepository coverLetterJpaRepository;
 
     public ApplyListResponse getAllApplyList(MemberInfoObject mio) {
         Member member = memberJpaRepository.findById(mio.getMemberId()).get();
@@ -109,5 +117,35 @@ public class ApplyListService {
         }
 
         return ApplyListResponse.of(applyList);
+    }
+
+    public ApplyListDetailResponse getApplyListDetail(MemberInfoObject mio, Long announcementId) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+        AnnouncementEntity announcementEntity = announcementJpaRepository.findById(announcementId).get();
+
+        ApplyEntity applyEntity = applyJpaRepository.findByMemberAndAnnouncementEntity(member, announcementEntity);
+
+        //자소서 목록 불러오기
+        List<CoverLetterEntity> coverLetterList = coverLetterJpaRepository.findAllByApplyEntity(applyEntity);
+
+        ArrayList<MyCoverLetterListEntry> myCoverLetterList = new ArrayList<>();
+        for(CoverLetterEntity coverLetterEntity : coverLetterList){
+            Long id = coverLetterEntity.getId();
+            String title = coverLetterEntity.getTitle();
+
+            MyCoverLetterListEntry myCoverLetterListEntry = MyCoverLetterListEntry.of(id, title);
+            myCoverLetterList.add(myCoverLetterListEntry);
+        }
+
+        return ApplyListDetailResponse.of(
+                applyEntity.getAnnouncementEntity().getId(),
+                applyEntity.getApplyStatus().toString(),
+                applyEntity.getAnnouncementEntity().getScholarShipImage(),
+                applyEntity.getAnnouncementEntity().getScholarShipName(),
+                applyEntity.getAnnouncementEntity().getScholarShipFoundation(),
+                applyEntity.getAnnouncementEntity().getApplicationPeriod(),
+                myCoverLetterList
+        );
+
     }
 }

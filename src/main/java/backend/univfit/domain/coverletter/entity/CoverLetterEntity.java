@@ -1,5 +1,6 @@
 package backend.univfit.domain.coverletter.entity;
 
+import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.global.BaseEntity;
 import jakarta.persistence.*;
@@ -21,4 +22,11 @@ public class CoverLetterEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    private String title;
+
+    @ManyToOne
+    @JoinColumn(name = "apply_id")
+    private ApplyEntity applyEntity;
+
 }

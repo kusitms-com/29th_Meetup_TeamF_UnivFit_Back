@@ -4,6 +4,7 @@ import java.util.List;
 
 public record AnnouncementDetailResponse(
         Long scholarshipId,
+        String scholarShipImage,
         String scholarshipName,
         String scholarshipFoundation,
         String remainingDay,
@@ -13,17 +14,20 @@ public record AnnouncementDetailResponse(
         String hashTag,
         List<String> applyCondition,
 //        String applicationConditions,
-        String detailContents
+        String detailContents,
+        Integer likes
 ) {
-    public static AnnouncementDetailResponse of(Long scholarshipId,String scholarShipName, String scholarShipFoundation,String remainingDay,
+    public static AnnouncementDetailResponse of(Long scholarshipId, String scholarShipImage, String scholarShipName, String scholarShipFoundation, String remainingDay,
                                                 String applyPossible,
                                                 String supportAmount,
                                                 String applicationPeriod, String hashTag, List<String> applyCondition,
-                                                String detailContents) {
-        return new AnnouncementDetailResponse(scholarshipId,
+                                                String detailContents,
+                                                Integer likes) {
+
+        return new AnnouncementDetailResponse(scholarshipId, scholarShipImage,
                 scholarShipName, scholarShipFoundation, remainingDay, applyPossible,
                 supportAmount, applicationPeriod, hashTag, applyCondition,
-                detailContents
+                detailContents, likes
         );
 
     }

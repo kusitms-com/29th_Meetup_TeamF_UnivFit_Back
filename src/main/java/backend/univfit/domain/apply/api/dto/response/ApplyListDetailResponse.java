@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Setter
 @Builder
 public class ApplyListDetailResponse {
-    private Long id;
+    private Long applyId;
     private String applyStatus;
     private String announcementImageUrl;
     private String scholarShipName;
@@ -21,7 +21,7 @@ public class ApplyListDetailResponse {
 
 
     public static ApplyListDetailResponse of(
-            Long id,
+            Long applyId,
             String applyStatus,
             String announcementImageUrl,
             String scholarShipName,
@@ -30,7 +30,7 @@ public class ApplyListDetailResponse {
             ArrayList<MyCoverLetterListEntry> myCoverLetterList
     ){
         return ApplyListDetailResponse.builder()
-                .id(id)
+                .applyId(applyId)
                 .applyStatus(applyStatus)
                 .announcementImageUrl(announcementImageUrl)
                 .scholarShipName(scholarShipName)

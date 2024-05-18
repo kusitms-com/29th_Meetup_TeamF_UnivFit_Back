@@ -119,11 +119,10 @@ public class ApplyListService {
         return ApplyListResponse.of(applyList);
     }
 
-    public ApplyListDetailResponse getApplyListDetail(MemberInfoObject mio, Long announcementId) {
+    public ApplyListDetailResponse getApplyListDetail(MemberInfoObject mio, Long applyId) {
         Member member = memberJpaRepository.findById(mio.getMemberId()).get();
-        AnnouncementEntity announcementEntity = announcementJpaRepository.findById(announcementId).get();
 
-        ApplyEntity applyEntity = applyJpaRepository.findByMemberAndAnnouncementEntity(member, announcementEntity);
+        ApplyEntity applyEntity = applyJpaRepository.findById(applyId).get();
 
         String applyStatus = "미입력";
         if(applyEntity.getApplyStatus() == ApplyStatus.PASS){
@@ -146,7 +145,7 @@ public class ApplyListService {
         }
 
         return ApplyListDetailResponse.of(
-                applyEntity.getAnnouncementEntity().getId(),
+                applyEntity.getId(),
                 applyStatus,
                 applyEntity.getAnnouncementEntity().getScholarShipImage(),
                 applyEntity.getAnnouncementEntity().getScholarShipName(),

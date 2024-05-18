@@ -49,7 +49,10 @@ public enum ErrorStatus implements BaseErrorCode {
     JWT_INVALIED(HttpStatus.UNAUTHORIZED, "JWT_003", "유효한 JWT가 아닙니다."),
 
     //온보딩 에러
-    ONBOARD_DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "ONBOARD_001", "중복된 닉네임 입니다.");
+    ONBOARD_DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "ONBOARD_001", "중복된 닉네임 입니다."),
+
+    //지원 에러
+    APPLY_MEMBER_NOT_MATCH(HttpStatus.BAD_REQUEST, "APPLY_001", "유효한 유저가 아닙니다.");
 
 
 

@@ -8,6 +8,7 @@ import backend.univfit.domain.apply.api.dto.response.MyCoverLetterListEntry;
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.apply.entity.enums.ApplyStatus;
+import backend.univfit.domain.apply.exception.ApplyException;
 import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
 import backend.univfit.domain.apply.repository.ApplyJpaRepository;
 import backend.univfit.domain.coverletter.entity.CoverLetterEntity;
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static backend.univfit.global.error.status.ErrorStatus.APPLY_MEMBER_NOT_MATCH;
 
 @Service
 @RequiredArgsConstructor
@@ -125,6 +128,9 @@ public class ApplyListService {
         Member member = memberJpaRepository.findById(mio.getMemberId()).get();
 
         ApplyEntity applyEntity = applyJpaRepository.findById(applyId).get();
+        if(applyEntity.getMember() != member){
+            throw new ApplyException(APPLY_MEMBER_NOT_MATCH);
+        }
 
         String applyStatus = "미입력";
         if(applyEntity.getApplyStatus() == ApplyStatus.PASS){
@@ -159,7 +165,13 @@ public class ApplyListService {
     }
 
     public GeneralResponse changeApplyStatus(MemberInfoObject mio, Long applyId, ChangeApplyStatusRequest cas) {
+        Member member = memberJpaRepository.findById(mio.getMemberId()).get();
+
         ApplyEntity applyEntity = applyJpaRepository.findById(applyId).get();
+
+        if(applyEntity.getMember() != member){
+            throw new ApplyException(APPLY_MEMBER_NOT_MATCH);
+        }
         int applyStatusIndex = cas.getApplyStatus();
         ApplyStatus[] applyStatusArray = ApplyStatus.values();
         ApplyStatus applyStatus = applyStatusArray[applyStatusIndex];

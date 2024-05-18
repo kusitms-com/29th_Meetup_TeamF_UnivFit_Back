@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyPageApi {
     private final MyPageService myPageService;
 
+    /**
+     * 마이페이지 조회
+     * @param memberInfoObject
+     * @return
+     */
     @GetMapping("/my-page")
     public ApiResponse<MyPageResponse> getMyPage(@MemberInfo MemberInfoObject memberInfoObject) {
         return ApiResponse.onSuccess(myPageService.getMyPage(memberInfoObject));

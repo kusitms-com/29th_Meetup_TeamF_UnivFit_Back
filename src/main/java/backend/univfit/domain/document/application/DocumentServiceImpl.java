@@ -32,7 +32,7 @@ public class DocumentServiceImpl implements DocumentService {
 //        Long memberId = memberInfoObject.getMemberId();
         Long memberId = 1L;
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
-        if (createDocumentRequest.documentName().isBlank() || createDocumentRequest.documentName().isEmpty()
+        if (createDocumentRequest.documentName() == null || createDocumentRequest.documentName().isEmpty()
                 || createDocumentRequest.issuedDate() == null) {
             throw new DocumentException(DOCUMENT_INVALID_BODY);
         }

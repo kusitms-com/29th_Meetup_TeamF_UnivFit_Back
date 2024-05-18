@@ -22,15 +22,14 @@ public class HomeAnnouncementServiceImpl implements HomeAnnouncementService {
                 .stream()
                 .map(objects -> {
                     AnnouncementEntity announcement = (AnnouncementEntity) objects[0];
-                    Long likeCount = (Long) objects[1];
-                    String like = likeCount + "명이 찜했어요!";
-                    return new PopularAnnouncementResponse(
+                    Integer likeCount = (Integer) objects[1];
+                    PopularAnnouncementResponse.of(
                             announcement.getId(),
                             announcement.getScholarShipImage(),
                             announcement.getScholarShipName(),
                             announcement.getScholarShipFoundation(),
                             announcement.getApplicationPeriod(),
-                            like
+                            likeCount
                     );
                 })
                 .toList();

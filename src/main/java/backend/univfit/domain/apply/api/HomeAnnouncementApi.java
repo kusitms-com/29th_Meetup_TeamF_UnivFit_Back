@@ -17,11 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeAnnouncementApi {
     private final HomeAnnouncementService homeAnnouncementService;
 
+    /**
+     * 인기 장학금 조회
+     * @return
+     */
     @GetMapping("/announcements")
     public ApiResponse<PopularAnnouncementListResponse> getPopularAnnouncements() {
         return ApiResponse.onSuccess(homeAnnouncementService.getPopularAnnouncements());
     }
 
+    /**
+     * 검색 후 검색 키워드에 맞는 공고 조회
+     * @param q
+     * @return
+     */
     @GetMapping("/announcements/search")
     public ApiResponse<AnnouncementListBySearchResponse> getAnnouncementsBySearch(@RequestParam(value = "q") String q) {
         return ApiResponse.onSuccess(homeAnnouncementService.getAnnouncementsBySearch(q));

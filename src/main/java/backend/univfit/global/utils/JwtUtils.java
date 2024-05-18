@@ -16,7 +16,7 @@ import static backend.univfit.global.error.status.ErrorStatus.JWT_INVALIED;
 @Slf4j
 public class JwtUtils {
     public static String createAccessToken(String socialLoginInfo, Long socialPK, Long memberId, String secretKey){
-        Long expiredMs = Duration.ofHours(2).toMillis(); // 만료 시간 2시간
+        Long expiredMs = Duration.ofHours(6).toMillis(); // 만료 시간 6시간
         //token에 들어있는 유저 정보를 사용하기 위함
         // token에 유저 정보 담기 위해 claim사용
         Claims claims = Jwts.claims();

@@ -1,16 +1,15 @@
 package backend.univfit.domain.apply.api;
 
+import backend.univfit.domain.apply.api.dto.request.ChangeApplyStatusRequest;
 import backend.univfit.domain.apply.api.dto.response.ApplyListDetailResponse;
 import backend.univfit.domain.apply.api.dto.response.ApplyListResponse;
 import backend.univfit.domain.apply.application.ApplyListService;
 import backend.univfit.global.ApiResponse;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
 import backend.univfit.global.argumentResolver.customAnnotation.MemberInfo;
+import backend.univfit.global.dto.response.GeneralResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/apply-list")
@@ -33,10 +32,17 @@ public class ApplyListApi {
         return ApiResponse.onSuccess(applyListService.getFailApplyList(mio));
     }
 
-    @GetMapping("/{ApplyId}")
+    @GetMapping("/{applyId}")
     public ApiResponse<ApplyListDetailResponse> getApplyListDetail(@MemberInfo MemberInfoObject mio,
-                                                             @PathVariable(name = "ApplyId") Long applyId){
+                                                             @PathVariable(name = "applyId") Long applyId){
         return ApiResponse.onSuccess(applyListService.getApplyListDetail(mio, applyId));
+    }
+
+    @PatchMapping("/apply-status/{applyId}")
+    public ApiResponse<GeneralResponse> changeApplyStatus(@MemberInfo MemberInfoObject mio,
+                                                          @PathVariable(name = "applyId") Long applyId,
+                                                          @RequestBody ChangeApplyStatusRequest cas){
+        return ApiResponse.onSuccess(applyListService.changeApplyStatus(mio, applyId, cas));
     }
 
 }

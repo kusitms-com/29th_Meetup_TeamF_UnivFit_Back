@@ -1,5 +1,6 @@
 package backend.univfit.domain.apply.application;
 
+import backend.univfit.domain.apply.api.dto.request.ChangeApplyStatusRequest;
 import backend.univfit.domain.apply.api.dto.response.ApplyListDetailResponse;
 import backend.univfit.domain.apply.api.dto.response.ApplyListEntry;
 import backend.univfit.domain.apply.api.dto.response.ApplyListResponse;
@@ -14,6 +15,7 @@ import backend.univfit.domain.coverletter.repository.CoverLetterJpaRepository;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
 import backend.univfit.global.argumentResolver.MemberInfoObject;
+import backend.univfit.global.dto.response.GeneralResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -154,5 +156,18 @@ public class ApplyListService {
                 myCoverLetterList
         );
 
+    }
+
+    public GeneralResponse changeApplyStatus(MemberInfoObject mio, Long applyId, ChangeApplyStatusRequest cas) {
+        ApplyEntity applyEntity = applyJpaRepository.findById(applyId).get();
+        int applyStatusIndex = cas.getApplyStatus();
+        ApplyStatus[] applyStatusArray = ApplyStatus.values();
+        ApplyStatus applyStatus = applyStatusArray[applyStatusIndex];
+
+        applyEntity.setApplyStatus(applyStatus);
+
+        applyJpaRepository.save(applyEntity);
+
+        return GeneralResponse.of();
     }
 }

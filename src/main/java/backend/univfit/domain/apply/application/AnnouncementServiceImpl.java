@@ -59,13 +59,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 .filter(f -> finalStatuses.contains(f.getAnnouncementStatus().name()))
                 .map(ar -> {
                     String announcementStatus = announcementManager.checkAnnouncementStatus(ar);
-                    long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ar.getEndDocumentDate());
-                    String remainingDaysToString = "D-" + remainingDay;
+                    Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ar.getEndDocumentDate());
                     String applyPossible = announcementManager.checkEligibility(ar, 1L);
 
                     return AnnouncementResponse.of(ar.getId(), ar.getScholarShipImage(),
                             ar.getScholarShipName(), ar.getScholarShipFoundation(), announcementStatus,
-                            ar.getApplicationPeriod(), remainingDaysToString, applyPossible
+                            ar.getApplicationPeriod(), remainingDay, applyPossible
                     );
                 }).toList();
 
@@ -91,16 +90,15 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         ae.updateStatus(LocalDate.now());
         AnnouncementEntity announcement = announcementJpaRepository.save(ae);
-        long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
-        String remainingDaysToString = "D-" + remainingDay;
+        Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
         String applyPossible = announcementManager.checkEligibility(ae, 1L);
-        String supportAmount = ae.getSupportAmount() + "만원";
+        Integer supportAmount = ae.getSupportAmount();
         List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split("\\s*,\\s*")).toList();
 
         Integer likesCount = likeJpaRepository.findByAnnouncementEntity(announcement).size();
 
         return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipImage(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
-                remainingDaysToString, applyPossible, supportAmount, ae.getApplicationPeriod(),
+                remainingDay, applyPossible, supportAmount, ae.getApplicationPeriod(),
                 ae.getHashTag(), applyCondition, ae.getDetailContents(), likesCount);
     }
 

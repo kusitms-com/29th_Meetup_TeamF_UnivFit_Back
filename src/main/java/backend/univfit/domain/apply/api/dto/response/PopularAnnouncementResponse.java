@@ -6,10 +6,10 @@ public record PopularAnnouncementResponse(
         String scholarShipName,
         String scholarshipFoundation,
         String applicationPeriod,
-        Integer howManyLikes
+        Long howManyLikes
 ) {
     public static PopularAnnouncementResponse of(Long announcementId, String scholarShipImage, String scholarShipName, String scholarshipFoundation,
-                                                 String applicationPeriod, Integer howManyLikes) {
+                                                 String applicationPeriod, Long howManyLikes) {
         return new PopularAnnouncementResponse(announcementId, scholarShipImage, scholarShipName, scholarshipFoundation,
                 applicationPeriod, howManyLikes);
     }

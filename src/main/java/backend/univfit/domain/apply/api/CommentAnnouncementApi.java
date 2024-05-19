@@ -26,9 +26,11 @@ public class CommentAnnouncementApi {
      * @return
      */
     @PostMapping("/{announcementId}/comments")
-    public ApiResponse<?> createAnnouncementComments(@RequestBody CommentRequest commentRequest, @PathVariable Long announcementId
-                                                     /**, @MemberInfo MemberInfoObject memberInfoObject**/) {
-        announcementCommentService.createAnnouncementComments(commentRequest, announcementId);
+    public ApiResponse<?> createAnnouncementComments(@RequestBody CommentRequest commentRequest,
+                                                     @PathVariable Long announcementId,
+                                                     @MemberInfo MemberInfoObject memberInfoObject) {
+
+        announcementCommentService.createAnnouncementComments(commentRequest, announcementId,memberInfoObject);
         return ApiResponse.onSuccess("댓글이 성공적으로 생성되었습니다.");
     }
 

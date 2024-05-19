@@ -22,12 +22,14 @@ public class AnnouncementApi {
 
     /**
      * 전체 장학금 전체 조회
+     *
      * @param status
      * @return
      */
     @GetMapping("")
-    public ApiResponse<AnnouncementListResponse> getAnnouncementList(@RequestParam(required = false, defaultValue = "ING") List<String> status/**,@RequestHeader("socialAccessToken") String accessToken**/) {
-        return ApiResponse.onSuccess(announcementService.getAnnouncementList(status));
+    public ApiResponse<AnnouncementListResponse> getAnnouncementList(@RequestParam(required = false, defaultValue = "ING") List<String> status,
+                                                                     @MemberInfo MemberInfoObject memberInfoObject) {
+        return ApiResponse.onSuccess(announcementService.getAnnouncementList(status,memberInfoObject));
     }
 
     /**
@@ -36,9 +38,9 @@ public class AnnouncementApi {
      * @return
      */
     @GetMapping("/{announcementId}")
-    public ApiResponse<AnnouncementDetailResponse> getAnnouncement(@PathVariable Long announcementId
-                                                                   /**,@MemberInfo MemberInfoObject memberInfoObject**/) {
-        return ApiResponse.onSuccess(announcementService.getAnnouncement(announcementId/**,memberInfoObject**/));
+    public ApiResponse<AnnouncementDetailResponse> getAnnouncement(@PathVariable Long announcementId,
+                                                                   @MemberInfo MemberInfoObject memberInfoObject) {
+        return ApiResponse.onSuccess(announcementService.getAnnouncement(announcementId, memberInfoObject));
     }
 
     /**
@@ -47,9 +49,9 @@ public class AnnouncementApi {
      * @return
      */
     @PostMapping("/{announcementId}")
-    public ApiResponse<?> saveAnnouncement(/**@MemberInfo MemberInfoObject memberInfoObject,**/
-                                           @PathVariable Long announcementId) {
-        announcementService.saveAnnouncement(announcementId/*,memberInfoObject*/);
+    public ApiResponse<?> saveAnnouncement(@PathVariable Long announcementId,
+                                           @MemberInfo MemberInfoObject memberInfoObject) {
+        announcementService.saveAnnouncement(announcementId, memberInfoObject);
         return ApiResponse.onSuccess("장학금이 성공적으로 저장되었습니다.");
 
     }

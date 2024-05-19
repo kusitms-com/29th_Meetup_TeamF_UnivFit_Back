@@ -5,13 +5,12 @@ import backend.univfit.domain.document.api.dto.request.UpdateDocumentRequest;
 import backend.univfit.domain.document.api.dto.response.DocumentDetailResponse;
 import backend.univfit.domain.document.api.dto.response.DocumentListResponse;
 import backend.univfit.domain.document.api.dto.response.DocumentResponse;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 
 public interface DocumentService {
-//    void createDocuments(MemberInfoObject memberInfoObject, CreateDocumentRequest createDocumentRequest);
-    void createDocuments(CreateDocumentRequest createDocumentRequest);
-    DocumentListResponse getAllDocuments(/**@MemberInfo MemberInfoObject memberInfoObject,**/);
-    void deleteDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/Long documentId);
-    DocumentResponse updateDocument(UpdateDocumentRequest updateDocumentRequest,/**@MemberInfo MemberInfoObject memberInfoObject,**/Long documentId);
-    DocumentDetailResponse getDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/Long documentId);
-
+    void createDocuments(MemberInfoObject memberInfoObject, CreateDocumentRequest createDocumentRequest);
+    DocumentListResponse getAllDocuments(MemberInfoObject memberInfoObject);
+    DocumentResponse updateDocument(MemberInfoObject memberInfoObject, UpdateDocumentRequest updateDocumentRequest, Long documentId);
+    DocumentDetailResponse getDocument(MemberInfoObject memberInfoObject, Long documentId);
+    void deleteDocument(MemberInfoObject memberInfoObject, Long documentId);
 }

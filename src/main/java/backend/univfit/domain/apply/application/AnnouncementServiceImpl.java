@@ -17,6 +17,7 @@ import backend.univfit.domain.apply.repository.*;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.exception.MemberException;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,10 +43,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     /**
      * 전체장학금 조회
      * 아직 지원대상인지, 지원불가인지, 판단불가인지는 안함
+     *
      * @return
      */
     @Override
-    public AnnouncementListResponse getAnnouncementList(List<String> statuses/**,Long memberId**/) {
+    public AnnouncementListResponse getAnnouncementList(List<String> statuses, MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
         List<String> finalStatuses = (statuses == null || statuses.isEmpty())
                 ? List.of(AnnouncementStatus.ING.name())
                 : new ArrayList<>(statuses);
@@ -60,7 +63,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 .map(ar -> {
                     String announcementStatus = announcementManager.checkAnnouncementStatus(ar);
                     Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ar.getEndDocumentDate());
-                    String applyPossible = announcementManager.checkEligibility(ar, 1L);
+                    String applyPossible = announcementManager.checkEligibility(ar, memberId);
 
                     return AnnouncementResponse.of(ar.getId(), ar.getScholarShipImage(),
                             ar.getScholarShipName(), ar.getScholarShipFoundation(), announcementStatus,
@@ -78,8 +81,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
      * @return
      */
     @Override
-    public AnnouncementDetailResponse getAnnouncement(Long announcementId/**, MemberInfoObject memberInfoObject**/) {
-//        Long memberId = memberInfoObject.getMemberId();
+    public AnnouncementDetailResponse getAnnouncement(Long announcementId, MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
 
         AnnouncementEntity ae = announcementJpaRepository.findById(announcementId)
                 .orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
@@ -90,7 +93,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         ae.updateStatus(LocalDate.now());
         AnnouncementEntity announcement = announcementJpaRepository.save(ae);
         Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
-        String applyPossible = announcementManager.checkEligibility(ae, 1L);
+        String applyPossible = announcementManager.checkEligibility(ae, memberId);
         String supportAmount = ae.getSupportAmount();
         List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split("\\s*,\\s*")).toList();
 
@@ -112,9 +115,8 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public void saveAnnouncement(Long announcementId) {
-//        Long memberId = memberInfoObject.getMemberId();
-        Long memberId = 1L;
+    public void saveAnnouncement(Long announcementId, MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
         AnnouncementEntity ae = announcementJpaRepository.findById(announcementId).orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
 

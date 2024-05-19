@@ -9,11 +9,12 @@ import backend.univfit.global.argumentResolver.MemberInfoObject;
 import java.util.List;
 
 public interface AnnouncementService {
-    AnnouncementListResponse getAnnouncementList(List<String> statuses);
+    AnnouncementListResponse getAnnouncementList(List<String> statuses,MemberInfoObject memberInfoObject);
 
-    AnnouncementDetailResponse getAnnouncement(Long announcementId/**, MemberInfoObject memberInfoObject**/);
+    AnnouncementDetailResponse getAnnouncement(Long announcementId, MemberInfoObject memberInfoObject);
+
+    void saveAnnouncement(Long announcementId, MemberInfoObject memberInfoObject);
 
     ScholarShipFoundationResponse getScholarShipFoundationContents(Long announcementId);
 
-    void saveAnnouncement(Long announcementId/**, MemberInfoObject memberInfoObject**/);
 }

@@ -19,9 +19,9 @@ public class ClovaService {
     @Value("${naver.client-id}")
     private String CLIENT_ID;
     @Value("${naver.client-secret}")
-    private static String CLIENT_SECRET;
+    private String CLIENT_SECRET;
     @Value("${naver.api-url}")
-    private static String API_URL;
+    private String API_URL;
 
     public String summarizeText(FoundationSummaryRequest request) {
         SummaryOption.Document document = FoundationSummaryRequest.toDocument(request.title(), request.content());

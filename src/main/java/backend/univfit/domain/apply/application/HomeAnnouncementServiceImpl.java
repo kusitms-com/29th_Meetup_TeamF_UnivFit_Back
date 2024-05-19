@@ -22,7 +22,6 @@ public class HomeAnnouncementServiceImpl implements HomeAnnouncementService {
                 .stream()
                 .map(objects -> {
                     AnnouncementEntity announcement = (AnnouncementEntity) objects[0];
-                    System.out.println(objects[1].getClass());
                     Long likeCount = (Long) objects[1];
                     return PopularAnnouncementResponse.of(
                             announcement.getId(),

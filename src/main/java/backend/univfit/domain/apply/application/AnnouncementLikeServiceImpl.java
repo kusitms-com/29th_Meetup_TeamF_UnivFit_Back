@@ -11,6 +11,7 @@ import backend.univfit.domain.apply.repository.LikeJpaRepository;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.exception.MemberException;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +32,8 @@ public class AnnouncementLikeServiceImpl implements AnnouncementLikeService{
     private final AnnouncementManager announcementManager;
 
     @Override
-    public void likeAnnouncement(Long announcementId/**, MemberInfoObject memberInfoObject**/) {
-//        Long memberId = memberInfoObject.getMemberId();
-        Long memberId = 1L;
+    public void likeAnnouncement(Long announcementId, MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId)
                 .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 
@@ -48,8 +48,8 @@ public class AnnouncementLikeServiceImpl implements AnnouncementLikeService{
     }
 
     @Override
-    public void deleteLikeAnnouncement(Long announcementId/**, MemberInfoObject memberInfoObject**/) {
-        Long memberId = 1L;
+    public void deleteLikeAnnouncement(Long announcementId, MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId)
                 .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 
@@ -61,9 +61,8 @@ public class AnnouncementLikeServiceImpl implements AnnouncementLikeService{
     }
 
     @Override
-    public AnnouncementListResponse getLikeAnnouncementList() {
-        Long memberId = 1L;
-
+    public AnnouncementListResponse getLikeAnnouncementList(MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId)
                 .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 

@@ -6,6 +6,7 @@ import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
 import backend.univfit.domain.apply.repository.AnnouncementJpaRepository;
 import backend.univfit.domain.apply.repository.ConditionJpaRepository;
 import backend.univfit.domain.apply.repository.ScholarShipFoundationJpaRepository;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,8 @@ public class FitAnnouncementServiceImpl implements FitAnnouncementService{
     private final ScholarShipFoundationJpaRepository scholarShipFoundationJpaRepository;
 
     @Override
-    public AnnouncementListResponse getAnnouncementList(String status) {
+    public AnnouncementListResponse getAnnouncementList(String status, MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
         List<AnnouncementResponse> list = announcementJpaRepository.findAll().stream()
                 .map(ar -> {
                     ar.updateStatus(LocalDate.now());
@@ -35,7 +37,7 @@ public class FitAnnouncementServiceImpl implements FitAnnouncementService{
                 .map(ar -> {
                     String announcementStatus = announcementManager.checkAnnouncementStatus(ar);
                     Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ar.getEndDocumentDate());
-                    String applyPossible = announcementManager.checkEligibility(ar, 1L);
+                    String applyPossible = announcementManager.checkEligibility(ar, memberId);
 
                     return AnnouncementResponse.of(ar.getId(), ar.getScholarShipImage(),
                             ar.getScholarShipName(), ar.getScholarShipFoundation(), announcementStatus,

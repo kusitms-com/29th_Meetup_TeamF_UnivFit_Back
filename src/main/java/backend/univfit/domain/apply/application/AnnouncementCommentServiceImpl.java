@@ -10,6 +10,7 @@ import backend.univfit.domain.comment.entity.CommentEntity;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.exception.MemberException;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +32,8 @@ public class AnnouncementCommentServiceImpl implements AnnouncementCommentServic
     private final MemberJpaRepository memberJpaRepository;
 
     @Override
-    public void createAnnouncementComments(CommentRequest commentRequest, Long announcementId) {
-        Long memberId = 1L;
+    public void createAnnouncementComments(CommentRequest commentRequest, Long announcementId, MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId)
                 .orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 

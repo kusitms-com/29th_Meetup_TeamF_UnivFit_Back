@@ -11,6 +11,7 @@ import backend.univfit.domain.document.repository.DocumentJpaRepository;
 import backend.univfit.domain.member.entity.Member;
 import backend.univfit.domain.member.exception.MemberException;
 import backend.univfit.domain.member.repository.MemberJpaRepository;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +29,8 @@ public class DocumentServiceImpl implements DocumentService {
 
 
     @Override
-    public void createDocuments(/**MemberInfoObject memberInfoObject,**/ CreateDocumentRequest createDocumentRequest) {
-//        Long memberId = memberInfoObject.getMemberId();
-        Long memberId = 1L;
+    public void createDocuments(MemberInfoObject memberInfoObject, CreateDocumentRequest createDocumentRequest) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
         if (createDocumentRequest.documentName() == null || createDocumentRequest.documentName().isEmpty()
                 || createDocumentRequest.issuedDate() == null) {
@@ -44,9 +44,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public DocumentListResponse getAllDocuments(/**MemberInfoObject memberInfoObject**/) {
-        //        Long memberId = memberInfoObject.getMemberId();
-        Long memberId = 1L;
+    public DocumentListResponse getAllDocuments(MemberInfoObject memberInfoObject) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 
         List<DocumentResponse> documentResponseList = documentJpaRepository.findByMember(member)
@@ -58,9 +57,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void deleteDocument(/**MemberInfoObject memberInfoObject**/Long documentId) {
-        //        Long memberId = memberInfoObject.getMemberId();
-        Long memberId = 1L;
+    public void deleteDocument(MemberInfoObject memberInfoObject, Long documentId) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
         DocumentEntity document = documentJpaRepository.findByIdAndMember(documentId, member)
                 .orElseThrow(() -> new DocumentException(DOCUMENT_NOT_FOUND));
@@ -69,9 +67,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public DocumentResponse updateDocument(UpdateDocumentRequest updateDocumentRequest,/**MemberInfoObject memberInfoObject**/Long documentId) {
-        //        Long memberId = memberInfoObject.getMemberId();
-        Long memberId = 1L;
+    public DocumentResponse updateDocument(MemberInfoObject memberInfoObject, UpdateDocumentRequest updateDocumentRequest, Long documentId) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 
         if (updateDocumentRequest.documentName().isBlank() || updateDocumentRequest.documentName().isEmpty() || updateDocumentRequest.issuedDate() == null) {
@@ -89,9 +86,8 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public DocumentDetailResponse getDocument(/**MemberInfoObject memberInfoObject**/Long documentId) {
-        //        Long memberId = memberInfoObject.getMemberId();
-        Long memberId = 1L;
+    public DocumentDetailResponse getDocument(MemberInfoObject memberInfoObject, Long documentId) {
+        Long memberId = memberInfoObject.getMemberId();
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 
         DocumentEntity document = documentJpaRepository.findByIdAndMember(documentId, member)

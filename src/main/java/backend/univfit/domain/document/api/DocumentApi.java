@@ -7,6 +7,8 @@ import backend.univfit.domain.document.api.dto.response.DocumentListResponse;
 import backend.univfit.domain.document.api.dto.response.DocumentResponse;
 import backend.univfit.domain.document.application.DocumentService;
 import backend.univfit.global.ApiResponse;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
+import backend.univfit.global.argumentResolver.customAnnotation.MemberInfo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +25,9 @@ public class DocumentApi {
      * @return
      */
     @PostMapping("/documents")
-    public ApiResponse<?> createDocuments(/**@MemberInfo MemberInfoObject memberInfoObject,**/
+    public ApiResponse<?> createDocuments(@MemberInfo MemberInfoObject memberInfoObject,
                                           /*@Valid*/ @RequestBody CreateDocumentRequest createDocumentRequest) {
-        documentService.createDocuments(/**memberInfoObject,**/ createDocumentRequest);
+        documentService.createDocuments(memberInfoObject, createDocumentRequest);
         return ApiResponse.onSuccess("서류가 성공적으로 등록 되었습니다.");
     }
 
@@ -34,8 +36,8 @@ public class DocumentApi {
      * @return
      */
     @GetMapping("/documents")
-    public ApiResponse<DocumentListResponse> getAllDocuments(/**@MemberInfo MemberInfoObject memberInfoObject,**/) {
-        return ApiResponse.onSuccess(documentService.getAllDocuments(/**memberInfoObject**/));
+    public ApiResponse<DocumentListResponse> getAllDocuments(@MemberInfo MemberInfoObject memberInfoObject) {
+        return ApiResponse.onSuccess(documentService.getAllDocuments(memberInfoObject));
     }
 
     /**
@@ -45,12 +47,11 @@ public class DocumentApi {
      * @return
      */
     @PatchMapping("/documents/{documentId}")
-    public ApiResponse<DocumentResponse> updateDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/
+    public ApiResponse<DocumentResponse> updateDocument(@MemberInfo MemberInfoObject memberInfoObject,
                                                         @RequestBody UpdateDocumentRequest updateDocumentRequest,
                                                         @PathVariable Long documentId) {
-        return ApiResponse.onSuccess(
-                documentService.updateDocument(updateDocumentRequest,/*memberInfoObject,*/ documentId)
-        );
+
+        return ApiResponse.onSuccess(documentService.updateDocument(memberInfoObject, updateDocumentRequest, documentId));
     }
 
     /**
@@ -59,10 +60,10 @@ public class DocumentApi {
      * @return
      */
     @GetMapping("/documents/{documentId}")
-    public ApiResponse<DocumentDetailResponse> getDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/
+    public ApiResponse<DocumentDetailResponse> getDocument(@MemberInfo MemberInfoObject memberInfoObject,
                                                            @PathVariable Long documentId) {
 
-        return ApiResponse.onSuccess(documentService.getDocument(/*memberInfoObject*/documentId));
+        return ApiResponse.onSuccess(documentService.getDocument(memberInfoObject,documentId));
     }
 
     /**
@@ -71,10 +72,9 @@ public class DocumentApi {
      * @return
      */
     @DeleteMapping("/documents/{documentId}")
-    public ApiResponse<?> deleteDocument(/**@MemberInfo MemberInfoObject memberInfoObject,**/
-                                                           @PathVariable Long documentId) {
+    public ApiResponse<?> deleteDocument(@MemberInfo MemberInfoObject memberInfoObject, @PathVariable Long documentId) {
 
-        documentService.deleteDocument(/*memberInfoObject*/documentId);
+        documentService.deleteDocument(memberInfoObject,documentId);
         return ApiResponse.onSuccess("서류가 성공적으로 삭제되었습니다.");
     }
 

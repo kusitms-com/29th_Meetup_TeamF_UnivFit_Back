@@ -4,6 +4,8 @@ import backend.univfit.domain.apply.api.dto.response.AnnouncementListResponse;
 import backend.univfit.domain.apply.application.AnnouncementLikeService;
 import backend.univfit.domain.apply.application.AnnouncementService;
 import backend.univfit.global.ApiResponse;
+import backend.univfit.global.argumentResolver.MemberInfoObject;
+import backend.univfit.global.argumentResolver.customAnnotation.MemberInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,8 @@ public class AnnouncementLikeApi {
      * @return
      */
     @PostMapping("/{announcementId}/likes")
-    public ApiResponse<?> likeAnnouncement(@PathVariable Long announcementId/**, @MemberInfo MemberInfoObject memberInfoObject**/) {
-        announcementLikeService.likeAnnouncement(announcementId);
+    public ApiResponse<?> likeAnnouncement(@PathVariable Long announcementId, @MemberInfo MemberInfoObject memberInfoObject) {
+        announcementLikeService.likeAnnouncement(announcementId, memberInfoObject);
         return ApiResponse.onSuccess("성공적으로 좋아요가 반영되었습니다.");
     }
 
@@ -30,8 +32,8 @@ public class AnnouncementLikeApi {
      * @return
      */
     @DeleteMapping("/{announcementId}/likes")
-    public ApiResponse<?> deleteLikeAnnouncement(@PathVariable Long announcementId/**, @MemberInfo MemberInfoObject memberInfoObject**/) {
-        announcementLikeService.deleteLikeAnnouncement(announcementId);
+    public ApiResponse<?> deleteLikeAnnouncement(@PathVariable Long announcementId, @MemberInfo MemberInfoObject memberInfoObject) {
+        announcementLikeService.deleteLikeAnnouncement(announcementId, memberInfoObject);
         return ApiResponse.onSuccess("성공적으로 좋아요가 삭제되었습니다.");
     }
 
@@ -40,8 +42,8 @@ public class AnnouncementLikeApi {
      * @return
      */
     @GetMapping ("/likes")
-    public ApiResponse<AnnouncementListResponse> getAnnouncementList(/**, @MemberInfo MemberInfoObject memberInfoObject**/) {
-        return ApiResponse.onSuccess(announcementLikeService.getLikeAnnouncementList(/**memberInfoObject**/));
+    public ApiResponse<AnnouncementListResponse> getAnnouncementList(@MemberInfo MemberInfoObject memberInfoObject) {
+        return ApiResponse.onSuccess(announcementLikeService.getLikeAnnouncementList(memberInfoObject));
     }
 
 

@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/members")
 @RestController
 public class DocumentApi {
     private final DocumentService documentService;

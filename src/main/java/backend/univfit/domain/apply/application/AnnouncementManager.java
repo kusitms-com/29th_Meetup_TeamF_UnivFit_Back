@@ -43,27 +43,41 @@ public class AnnouncementManager {
                 .orElseThrow(() -> new ConditionException(CONDITION_NOT_FOUND));
         Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 
-        Long id = member.getMemberPrivateInfo().getId();
-        System.out.println("id = " + id);
-        MemberPrivateInfo memberInfo = memberPrivateInfoJpaRepository.findById(id)
+        MemberPrivateInfo memberInfo = memberPrivateInfoJpaRepository.findById(member.getMemberPrivateInfo().getId())
                 .orElseThrow(() -> new MemberPrivateInfoException(MEMBER_PRIVATE_NOT_FOUND));
 
-        return compareConditions(condition, memberInfo);
+        String s = compareConditions(condition, memberInfo);
+        System.out.println("s = " + s);
+        return s;
     }
 
     private String compareConditions(ConditionEntity condition, MemberPrivateInfo memberInfo) {
         boolean basicInfoMatch = compareBasicInfo(condition, memberInfo);
         System.out.println("basicInfoMatch = " + basicInfoMatch);
+
         boolean gradesMatch = compareGrades(condition, memberInfo);
         System.out.println("gradesMatch = " + gradesMatch);
+
         boolean incomeMatch = compareIncome(condition, memberInfo);
         System.out.println("incomeMatch = " + incomeMatch);
 
-        if (basicInfoMatch || gradesMatch || incomeMatch) {
+        //모두 일치하는 경우
+        if (basicInfoMatch && gradesMatch && incomeMatch) {
+            // exceptionValue 있으면 판단 불가로 함, 그게 아니면 지원 대상
+            if (condition.getExceptionValue() != null) {
+                return "판단불가";
+            }
+            return "지원대상";
+        }
+
+        // 조건 중 하나라도 일치하지 않는 경우, exceptionValue를 체크하기 전에 먼저 지원불가로 처리
+        if (!basicInfoMatch || !gradesMatch || !incomeMatch) {
             return "지원불가";
         }
-        if (
-                (condition.getDeptType() != null && memberInfo.getDeptType() == null) ||
+
+        // condition 필드는 있는데 memberInfo에 해당 필드가 null인 경우는 판단불가
+        if ((condition.getDeptType() != null && memberInfo.getDeptType() == null) ||
+                (condition.getDeptName() != null && memberInfo.getDeptName() == null) ||
                 (condition.getUnderPrivilegedInfo() != null && memberInfo.getUnderPrivilegedInfo() == null) ||
                 (condition.getSemester() != null && memberInfo.getSemester() == null) ||
                 (condition.getSchoolType() != null && memberInfo.getSchoolType() == null) ||
@@ -75,31 +89,35 @@ public class AnnouncementManager {
                 (condition.getAge() != null && memberInfo.getBirthYear() == null) ||
                 (condition.getMonthlyIncome() != null && memberInfo.getMonthlyIncome() == null) ||
                 (condition.getIncomeQuality() != null && memberInfo.getIncomeQuality() == null) ||
-                (condition.getSupportSection() != null && memberInfo.getSupportSection() == null) ||
-                (condition.getExceptionValue() != null)) {
+                (condition.getSupportSection() != null && memberInfo.getSupportSection() == null)) {
             return "판단불가";
         }
         return "지원대상";
     }
 
     private boolean compareBasicInfo(ConditionEntity condition, MemberPrivateInfo memberInfo) {
-        boolean deptTypeMatch = false;
+        boolean deptTypeMatch = true;
         if (condition.getDeptType() != null && !condition.getDeptType().isEmpty()) {
             List<String> allowedDeptTypes = Arrays.asList(condition.getDeptType().split("\\s*,\\s*"));
             deptTypeMatch = allowedDeptTypes.contains(memberInfo.getDeptType());
         }
+        System.out.println("deptTypeMatch = " + deptTypeMatch); //T
 
-        boolean underPrevilegedMatch = false;
+        boolean underPrevilegedMatch = true;
         if (condition.getUnderPrivilegedInfo() != null && !condition.getUnderPrivilegedInfo().isEmpty()) {
             List<String> allowedUnderPrivilegedTypes = Arrays.asList(condition.getUnderPrivilegedInfo().split("\\s*,\\s*"));
             underPrevilegedMatch = allowedUnderPrivilegedTypes.contains(memberInfo.getUnderPrivilegedInfo());
         }
 
-        boolean semesterMatch = false;
+        System.out.println("underPrevilegedMatch = " + underPrevilegedMatch); //T
+
+        boolean semesterMatch = true;
         if (condition.getSemester() != null && !condition.getSemester().isEmpty()) {
             List<String> semester = Arrays.asList(condition.getSemester().split("\\s*,\\s*"));
             semesterMatch = semester.contains(String.valueOf(memberInfo.getSemester()));
         }
+
+        System.out.println("semesterMatch = " + semesterMatch); //T
 
         int currentYear = Year.now().getValue();
         int age = currentYear - memberInfo.getBirthYear();
@@ -113,24 +131,25 @@ public class AnnouncementManager {
                 (condition.getResidenceType() == null || Objects.equals(condition.getResidenceType(), memberInfo.getResidenceType())) &&
                 (condition.getGender() == null || Objects.equals(condition.getGender(), memberInfo.getGender())) &&
                 (condition.getAge() == null || (condition.getAge() >= age)) &&
-                underPrevilegedMatch;
+                underPrevilegedMatch; //T
     }
 
     private boolean compareGrades(ConditionEntity condition, MemberPrivateInfo memberInfo) {
-        boolean useThree = memberInfo.getLastGradeOfThree() != null;
+        boolean useThree = memberInfo.getLastGradeOfThree() != null; //F
         if (useThree) {
-            return (condition.getTotalGradeOfThree() == null || (condition.getTotalGradeOfThree() <= memberInfo.getTotalGradeOfThree())) &&
-                    (condition.getLastGradeOfThree() == null || (condition.getLastGradeOfThree() <= memberInfo.getLastGradeOfThree()));
+            return (condition.getTotalGradeOfThree() == null || memberInfo.getTotalGradeOfThree() == null || condition.getTotalGradeOfThree() <= memberInfo.getTotalGradeOfThree()) &&
+                    (condition.getLastGradeOfThree() == null || memberInfo.getLastGradeOfThree() == null || condition.getLastGradeOfThree() <= memberInfo.getLastGradeOfThree());
         } else {
-            return (condition.getTotalGradeOfFive() == null || (condition.getTotalGradeOfFive() <= memberInfo.getTotalGradeOfFive())) &&
-                    (condition.getLastGradeOfFive() == null || (condition.getLastGradeOfFive() <= memberInfo.getLastGradeOfFive()));
-        }
+            return (condition.getTotalGradeOfFive() == null || memberInfo.getTotalGradeOfFive() == null || condition.getTotalGradeOfFive() <= memberInfo.getTotalGradeOfFive()) &&
+                    (condition.getLastGradeOfFive() == null || memberInfo.getLastGradeOfFive() == null || condition.getLastGradeOfFive() <= memberInfo.getLastGradeOfFive());
+        } //T 반환
+
     }
 
     private boolean compareIncome(ConditionEntity condition, MemberPrivateInfo memberInfo) {
         return (condition.getIncomeQuality() == null || (condition.getIncomeQuality() >= memberInfo.getIncomeQuality())) &&
                 (condition.getSupportSection()==null || (condition.getSupportSection() >= memberInfo.getSupportSection())) &&
                 (condition.getMonthlyIncome() == null || condition.getMonthlyIncome() >= memberInfo.getMonthlyIncome());
-    }
+    } //T
 
 }

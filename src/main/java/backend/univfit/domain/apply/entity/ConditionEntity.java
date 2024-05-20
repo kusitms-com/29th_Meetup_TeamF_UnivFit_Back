@@ -30,7 +30,7 @@ public class ConditionEntity {
     private String deptType;
     private String deptName;
     private Boolean isPresent;
-    private Integer semester;
+    private String semester;
     private String residence;
 
     private Integer residenceType;

@@ -49,6 +49,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     public AnnouncementListResponse getAnnouncementList(List<String> statuses, MemberInfoObject memberInfoObject) {
         Long memberId = memberInfoObject.getMemberId();
+        System.out.println("memberId = " + memberId);
         List<String> finalStatuses = (statuses == null || statuses.isEmpty())
                 ? List.of(AnnouncementStatus.ING.name())
                 : new ArrayList<>(statuses);

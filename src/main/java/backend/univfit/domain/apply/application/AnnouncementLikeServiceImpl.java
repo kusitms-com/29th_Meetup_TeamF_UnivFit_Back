@@ -75,7 +75,7 @@ public class AnnouncementLikeServiceImpl implements AnnouncementLikeService{
 
                     String announcementStatus = announcementManager.checkAnnouncementStatus(ae);
                     Long remainingDay = ChronoUnit.DAYS.between(LocalDate.now(), ae.getEndDocumentDate());
-                    String applyPossible = announcementManager.checkEligibility(ae, 1L);
+                    String applyPossible = announcementManager.checkEligibility(ae, memberId);
 
                     return AnnouncementResponse.of(ae.getId(), ae.getScholarShipImage(),
                             ae.getScholarShipName(), ae.getScholarShipFoundation(), announcementStatus,

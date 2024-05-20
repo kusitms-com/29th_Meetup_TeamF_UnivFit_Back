@@ -16,7 +16,7 @@ public class ScholarShipFoundationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 1000)
+    @Column(length = 3000)
     private String foundationInformation;
 
     @OneToOne

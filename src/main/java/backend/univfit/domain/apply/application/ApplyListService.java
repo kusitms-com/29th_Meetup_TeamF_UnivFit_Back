@@ -51,7 +51,7 @@ public class ApplyListService {
             ApplyListEntry applyListEntry = ApplyListEntry.of(
                     ae.getId(),
                     ae.getAnnouncementEntity().getEndDocumentDate(),
-                    "더미 링크",
+                    ae.getAnnouncementEntity().getScholarShipImage(),
                     ae.getAnnouncementEntity().getScholarShipName(),
                     ae.getAnnouncementEntity().getScholarShipFoundation(),
                     ae.getAnnouncementEntity().getApplicationPeriod(),
@@ -81,7 +81,7 @@ public class ApplyListService {
             ApplyListEntry applyListEntry = ApplyListEntry.of(
                     ae.getId(),
                     ae.getAnnouncementEntity().getEndDocumentDate(),
-                    "더미 링크",
+                    ae.getAnnouncementEntity().getScholarShipImage(),
                     ae.getAnnouncementEntity().getScholarShipName(),
                     ae.getAnnouncementEntity().getScholarShipFoundation(),
                     ae.getAnnouncementEntity().getApplicationPeriod(),
@@ -111,7 +111,7 @@ public class ApplyListService {
             ApplyListEntry applyListEntry = ApplyListEntry.of(
                     ae.getId(),
                     ae.getAnnouncementEntity().getEndDocumentDate(),
-                    "더미 링크",
+                    ae.getAnnouncementEntity().getScholarShipImage(),
                     ae.getAnnouncementEntity().getScholarShipName(),
                     ae.getAnnouncementEntity().getScholarShipFoundation(),
                     ae.getAnnouncementEntity().getApplicationPeriod(),

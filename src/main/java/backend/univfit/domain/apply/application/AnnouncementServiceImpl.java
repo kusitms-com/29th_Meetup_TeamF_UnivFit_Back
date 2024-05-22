@@ -7,6 +7,7 @@ import backend.univfit.domain.apply.api.dto.response.ScholarShipFoundationRespon
 import backend.univfit.domain.apply.entity.AnnouncementEntity;
 import backend.univfit.domain.apply.entity.ApplyEntity;
 import backend.univfit.domain.apply.entity.ConditionEntity;
+import backend.univfit.domain.apply.entity.LikeEntity;
 import backend.univfit.domain.apply.entity.enums.AnnouncementStatus;
 import backend.univfit.domain.apply.entity.enums.ApplyStatus;
 import backend.univfit.domain.apply.exception.AnnouncementException;
@@ -84,6 +85,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     public AnnouncementDetailResponse getAnnouncement(Long announcementId, MemberInfoObject memberInfoObject) {
         Long memberId = memberInfoObject.getMemberId();
+        Member member = memberJpaRepository.findById(memberId).orElseThrow(() -> new MemberException(MEMBER_NOT_FOUND));
 
         AnnouncementEntity ae = announcementJpaRepository.findById(announcementId)
                 .orElseThrow(() -> new AnnouncementException(ANNOUNCEMENT_NOT_FOUND));
@@ -100,9 +102,14 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         Integer likesCount = likeJpaRepository.findByAnnouncementEntity(announcement).size();
 
+        List<LikeEntity> byMember = likeJpaRepository.findByMember(member);
+        Boolean isLikedByMember = byMember.stream()
+                .anyMatch(like -> like.getAnnouncementEntity().getId().equals(announcementId));
+
+
         return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipImage(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
                 remainingDay, applyPossible, supportAmount, ae.getApplicationPeriod(),
-                ae.getHashTag(), applyCondition, ae.getDetailContents(), likesCount);
+                ae.getHashTag(), applyCondition, ae.getDetailContents(), likesCount,isLikedByMember);
     }
 
     @Override

@@ -52,7 +52,10 @@ public enum ErrorStatus implements BaseErrorCode {
     ONBOARD_DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "ONBOARD_001", "중복된 닉네임 입니다."),
 
     //지원 에러
-    APPLY_MEMBER_NOT_MATCH(HttpStatus.BAD_REQUEST, "APPLY_001", "유효한 유저가 아닙니다.");
+    APPLY_MEMBER_NOT_MATCH(HttpStatus.BAD_REQUEST, "APPLY_001", "유효한 유저가 아닙니다."),
+
+    //자소서 에러
+    COVER_LETTER_MEMBER_NOT_MATCH(HttpStatus.BAD_REQUEST, "COVERLETTER_001", "유효한 유저가 아닙니다.");
 
 
 

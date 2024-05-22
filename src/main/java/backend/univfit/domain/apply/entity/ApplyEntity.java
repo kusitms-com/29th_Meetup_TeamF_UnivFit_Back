@@ -25,7 +25,7 @@ public class ApplyEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "apply_announcement_id")
     private AnnouncementEntity announcementEntity;
 

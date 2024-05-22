@@ -16,7 +16,8 @@ public record AnnouncementDetailResponse(
 //        String applicationConditions,
         String detailContents,
         Integer likes,
-        Boolean memberIsLiked
+        Boolean memberIsLiked,
+        Boolean memberIsStored
 ) {
     public static AnnouncementDetailResponse of(Long scholarshipId, String scholarShipImage, String scholarShipName, String scholarShipFoundation, Long remainingDay,
                                                 String applyPossible,
@@ -24,12 +25,13 @@ public record AnnouncementDetailResponse(
                                                 String applicationPeriod, String hashTag, List<String> applyCondition,
                                                 String detailContents,
                                                 Integer likes,
-                                                Boolean memberIsLiked) {
+                                                Boolean memberIsLiked,
+                                                Boolean memberIsStored) {
 
         return new AnnouncementDetailResponse(scholarshipId, scholarShipImage,
                 scholarShipName, scholarShipFoundation, remainingDay, applyPossible,
                 supportAmount, applicationPeriod, hashTag, applyCondition,
-                detailContents, likes,memberIsLiked
+                detailContents, likes, memberIsLiked, memberIsStored
         );
 
     }

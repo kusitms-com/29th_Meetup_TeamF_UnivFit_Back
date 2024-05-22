@@ -78,7 +78,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     /**
      * 세부장학금 조회
-     *
      * @param announcementId
      * @return
      */
@@ -101,15 +100,18 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         List<String> applyCondition = Arrays.stream(ae.getApplicationConditions().split("\\s*,\\s*")).toList();
 
         Integer likesCount = likeJpaRepository.findByAnnouncementEntity(announcement).size();
-
         List<LikeEntity> byMember = likeJpaRepository.findByMember(member);
-        Boolean isLikedByMember = byMember.stream()
-                .anyMatch(like -> like.getAnnouncementEntity().getId().equals(announcementId));
 
+        Boolean isLikedByMember = byMember.stream().anyMatch(like -> like.getAnnouncementEntity().getId().equals(announcementId));
+        Boolean isStoredByMember = true;
+        if(applyJpaRepository.findByMemberAndAnnouncementEntity(member, announcement)==null){
+            isStoredByMember = false;
+        }
 
         return AnnouncementDetailResponse.of(ae.getId(), ae.getScholarShipImage(), ae.getScholarShipName(), ae.getScholarShipFoundation(),
                 remainingDay, applyPossible, supportAmount, ae.getApplicationPeriod(),
-                ae.getHashTag(), applyCondition, ae.getDetailContents(), likesCount,isLikedByMember);
+                ae.getHashTag(), applyCondition, ae.getDetailContents(), likesCount,
+                isLikedByMember, isStoredByMember);
     }
 
     @Override
@@ -130,6 +132,4 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         applyJpaRepository.save(ApplyEntity.of(null, ApplyStatus.NOT_YET, member, ae));
     }
-
-
 }

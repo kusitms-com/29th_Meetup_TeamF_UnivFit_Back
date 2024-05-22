@@ -19,6 +19,7 @@ import java.util.HashMap;
 public class KakaoApi {
     public static String getUserInfo(String accessToken) {
         String reqUrl = "https://kapi.kakao.com/v2/user/me";
+        log.info("accessToken : {}", accessToken);
         String id = null;
         try{
             URL url = new URL(reqUrl);

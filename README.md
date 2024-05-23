@@ -376,13 +376,14 @@ _3) 전국의 장학금과 공모전 정보를 제공하는 사회적 기업, �
 
 # **🔍 System Architecture**
 
-<img width="1920" alt="KakaoTalk_Photo_2024-04-29-22-56-18" src="https://github.com/KUSITMS-29th-TEAM-F/.github/assets/98576976/b402f2a9-7788-4930-839d-db045241897d">
+<img width="1920" alt="KakaoTalk_Photo_2024-05-23-23-48-20" src="https://github.com/kusitms-com/29th_Meetup_TeamF_UnivFit_Back/assets/98576976/8badf227-475b-45ce-babb-2defdbb6739b">
 
 <br><br>
 
 # **📜 ERD 설계도**
 
-<img width="1920" height="350" alt="KakaoTalk_Photo_2024-04-29-23-10-03" src="https://github.com/KUSITMS-29th-TEAM-F/.github/assets/98576976/a2fff552-b87e-4123-9381-6209ec5e142a">
+![Copy_of_mendong_4](https://github.com/kusitms-com/29th_Meetup_TeamF_UnivFit_Back/assets/98576976/8f9c4e11-55d2-46da-a4ec-fb9a794b795b)
+
 
 <br><br>
 

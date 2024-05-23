@@ -401,7 +401,6 @@ _3) 전국의 장학금과 공모전 정보를 제공하는 사회적 기업, �
 
 - <img src="https://img.shields.io/badge/Java17-3178C6?style=flat&logo=java&logoColor=white"/> <img src="https://img.shields.io/badge/SpringBoot-3178C6?style=flat&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=flat&logo=spring&logoColor=white"/>
 - <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=spring security&logoColor=white"/> <img src="https://img.shields.io/badge/JWT-black?style=flat-square&logo=JSON%20web%20tokens">
-- <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=MongoDB&logoColor=white"/>
 - <img src="https://img.shields.io/badge/Github Actions-2088FF?style=flat&logo=Github Actions&logoColor=white"/> <img src="https://img.shields.io/badge/NGINX-009639?style=flat&logo=nginx&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-4479A1?style=flat&logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/RDS-MySQL-4479A1?style=flat&logo=mysql&logoColor=white"/>
 
 <br><br>
@@ -461,11 +460,6 @@ _3) 전국의 장학금과 공모전 정보를 제공하는 사회적 기업, �
   - 오픈 소스 라이센스를 따르기 때문에 무료로 사용할 수 있다.(개발 비용절감)
   - 다양한 운영체제에서 사용할 수 있으며, 여러 가지의 프로그래밍 언어를 지원한다.
   - 널리 알려진 표준 SQL 형식을 사용합니다.(개발에 용이)
-
-- <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=MongoDB&logoColor=white"/>
-
-  - Schema-less 구조를 따라서 다양한 형태의 데이터를 저장할 수 있고, 데이터 모델의 유연한 변화가 가능하다.
-  - Scalue-out구조를 따라서 많은 데이터 저장이 가능하다.
 
 - <img src="https://img.shields.io/badge/Docker-4479A1?style=flat&logo=docker&logoColor=white"/>
 

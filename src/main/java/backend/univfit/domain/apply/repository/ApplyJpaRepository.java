@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface ApplyJpaRepository extends JpaRepository<ApplyEntity, Long> {
     List<ApplyEntity> findAllByMember(Member member);
-    void deleteApplyEntityByMemberAndId(Member member, Long id);
-
+    void deleteByMemberAndAnnouncementEntity(Member member, AnnouncementEntity announcementEntity);
     ApplyEntity findByMemberAndAnnouncementEntity(Member member, AnnouncementEntity announcementEntity);
 }

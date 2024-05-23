@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/members")
 public class MemberApi {
     private final MemberService memberService;
-    @DeleteMapping("/application/{id}")
+    @DeleteMapping("/application/{applicationId}")
     public ApiResponse<GeneralResponse> deleteMemberApplication(@MemberInfo MemberInfoObject mio,
-                                                                @PathVariable(name = "id") Long id){
-        return ApiResponse.onSuccess(memberService.deleteMemberApplication(mio, id));
+                                                                @PathVariable(name = "applicationId") Long applicationId){
+        return ApiResponse.onSuccess(memberService.deleteMemberApplication(mio, applicationId));
     }
 }

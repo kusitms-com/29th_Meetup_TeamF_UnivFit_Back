@@ -136,6 +136,12 @@ public class ApplyListService {
         }
 
         String applyStatus = "미입력";
+        if(applyEntity.getApplyStatus() == ApplyStatus.NOT_YET){
+            applyStatus = "지원예정";
+        }
+        if(applyEntity.getApplyStatus() == ApplyStatus.APPLY){
+            applyStatus = "지원완료";
+        }
         if(applyEntity.getApplyStatus() == ApplyStatus.PASS){
             applyStatus = "합격";
         }

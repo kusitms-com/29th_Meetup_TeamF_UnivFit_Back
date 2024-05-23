@@ -128,6 +128,7 @@ public class ApplyListService {
         Member member = memberJpaRepository.findById(mio.getMemberId()).get();
 
         ApplyEntity applyEntity = applyJpaRepository.findById(applyId).get();
+
         if(applyEntity.getMember() != member){
             throw new ApplyException(APPLY_MEMBER_NOT_MATCH);
         }
@@ -154,6 +155,7 @@ public class ApplyListService {
 
         return ApplyListDetailResponse.of(
                 applyEntity.getId(),
+                applyEntity.getAnnouncementEntity().getId(),
                 applyStatus,
                 applyEntity.getAnnouncementEntity().getScholarShipImage(),
                 applyEntity.getAnnouncementEntity().getScholarShipName(),

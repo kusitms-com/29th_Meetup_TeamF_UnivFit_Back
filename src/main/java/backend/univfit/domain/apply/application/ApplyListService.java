@@ -149,7 +149,7 @@ public class ApplyListService {
             Long id = coverLetterEntity.getId();
             String title = coverLetterEntity.getTitle();
 
-            MyCoverLetterListEntry myCoverLetterListEntry = MyCoverLetterListEntry.of(id, title);
+            MyCoverLetterListEntry myCoverLetterListEntry = MyCoverLetterListEntry.of(id, title, coverLetterEntity.getCreatedAt());
             myCoverLetterList.add(myCoverLetterListEntry);
         }
 

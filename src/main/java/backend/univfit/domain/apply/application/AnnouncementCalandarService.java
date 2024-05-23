@@ -62,7 +62,7 @@ public class AnnouncementCalandarService {
                 AnnouncementCalandarInfo aci = AnnouncementCalandarInfo.of(
                         ae.getId(),
                         announcementEntity.getEndDocumentDate(),
-                        "더미 링크", //아직 엔티티에 반영안되어서 이렇게 함
+                        announcementEntity.getScholarShipImage(),
                         announcementEntity.getScholarShipName(),
                         announcementEntity.getScholarShipFoundation(),
                         announcementEntity.getApplicationPeriod()
@@ -88,7 +88,7 @@ public class AnnouncementCalandarService {
                 AnnouncementCalandarInfo aci = AnnouncementCalandarInfo.of(
                         ae.getId(),
                         announcementEntity.getEndDocumentDate(),
-                        "더미 링크", //아직 엔티티에 반영안되어서 이렇게 함
+                        announcementEntity.getScholarShipImage(),
                         announcementEntity.getScholarShipName(),
                         announcementEntity.getScholarShipFoundation(),
                         announcementEntity.getApplicationPeriod()

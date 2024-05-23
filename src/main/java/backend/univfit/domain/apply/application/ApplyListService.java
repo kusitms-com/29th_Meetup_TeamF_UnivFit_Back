@@ -19,6 +19,7 @@ import backend.univfit.global.argumentResolver.MemberInfoObject;
 import backend.univfit.global.dto.response.GeneralResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import static backend.univfit.global.error.status.ErrorStatus.APPLY_MEMBER_NOT_M
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ApplyListService {
     private final ApplyJpaRepository applyJpaRepository;
     private final MemberJpaRepository memberJpaRepository;

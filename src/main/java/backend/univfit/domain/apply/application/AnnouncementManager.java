@@ -135,21 +135,28 @@ public class AnnouncementManager {
     }
 
     private boolean compareGrades(ConditionEntity condition, MemberPrivateInfo memberInfo) {
-        boolean useThree = memberInfo.getLastGradeOfThree() != null; //F
-        if (useThree) {
-            return (condition.getTotalGradeOfThree() == null || memberInfo.getTotalGradeOfThree() == null || condition.getTotalGradeOfThree() <= memberInfo.getTotalGradeOfThree()) &&
-                    (condition.getLastGradeOfThree() == null || memberInfo.getLastGradeOfThree() == null || condition.getLastGradeOfThree() <= memberInfo.getLastGradeOfThree());
-        } else {
-            return (condition.getTotalGradeOfFive() == null || memberInfo.getTotalGradeOfFive() == null || condition.getTotalGradeOfFive() <= memberInfo.getTotalGradeOfFive()) &&
-                    (condition.getLastGradeOfFive() == null || memberInfo.getLastGradeOfFive() == null || condition.getLastGradeOfFive() <= memberInfo.getLastGradeOfFive());
-        } //T 반환
+        boolean useThree = memberInfo.getLastGradeOfThree() != null;
 
+        if (useThree) {
+            return (condition.getTotalGradeOfThree() == null ||
+                    (memberInfo.getTotalGradeOfThree() != null && condition.getTotalGradeOfThree() <= memberInfo.getTotalGradeOfThree())) &&
+                    (condition.getLastGradeOfThree() == null ||
+                            (memberInfo.getLastGradeOfThree() != null && condition.getLastGradeOfThree() <= memberInfo.getLastGradeOfThree()));
+        } else {
+            return (condition.getTotalGradeOfFive() == null ||
+                    (memberInfo.getTotalGradeOfFive() != null && condition.getTotalGradeOfFive() <= memberInfo.getTotalGradeOfFive())) &&
+                    (condition.getLastGradeOfFive() == null ||
+                            (memberInfo.getLastGradeOfFive() != null && condition.getLastGradeOfFive() <= memberInfo.getLastGradeOfFive()));
+        }
     }
 
     private boolean compareIncome(ConditionEntity condition, MemberPrivateInfo memberInfo) {
-        return (condition.getIncomeQuality() == null || (condition.getIncomeQuality() >= memberInfo.getIncomeQuality())) &&
-                (condition.getSupportSection()==null || (condition.getSupportSection() >= memberInfo.getSupportSection())) &&
-                (condition.getMonthlyIncome() == null || condition.getMonthlyIncome() >= memberInfo.getMonthlyIncome());
-    } //T
+        return (condition.getIncomeQuality() == null ||
+                (memberInfo.getIncomeQuality() != null && condition.getIncomeQuality() >= memberInfo.getIncomeQuality())) &&
+                (condition.getSupportSection() == null ||
+                        (memberInfo.getSupportSection() != null && condition.getSupportSection() >= memberInfo.getSupportSection())) &&
+                (condition.getMonthlyIncome() == null ||
+                        (memberInfo.getMonthlyIncome() != null && condition.getMonthlyIncome() >= memberInfo.getMonthlyIncome()));
+    }
 
 }
